@@ -104,46 +104,7 @@ const GroupLoanTable = ({
       status: "PENDING",
     },
 
-    {
-      id: 3,
 
-      plan: "MICRO LOAN PLAN",
-      penaltyName: "MICRO PENALTY",
-      emiType: "WEEKLY",
-      planAmount: 25000,
-
-      member: "KOYEL SARKAR",
-      memberCode: "BRIZMM011",
-
-      group: "BRANCH M FINANCE",
-      staff: "STAFF01",
-
-      branch: "BRANCH M FINANCE",
-      branchCode: "AM5",
-
-      branchCenter: "CENTER AM5",
-      centerLeader: "KOYEL SARKAR",
-
-      description: "Small Business",
-
-      loanType: "Single Ledger",
-
-      purpose: "Business",
-
-      guarantor: "DEEPAK",
-
-      agentId: "AG003",
-
-      groupLeader: "KOYEL SARKAR",
-
-      penaltyScheme: "MICRO PENALTY",
-
-      hideRateInterest: "YES",
-
-      createdBy: "ADMIN (ADM01)",
-
-      status: "APPROVED",
-    },
   ];
 
 

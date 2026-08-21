@@ -629,13 +629,13 @@ const Sidebar = ({
     // =======================================================
 
     {
-      title: "FUND TRANSFER",
+      title: " FUND TRANSFER",
       key: "fund-transfer",
       icon: (
         <FaExchangeAlt className="accounting-icon-blue" />
       ),
 
-      path: "/fund-transfer",
+      path: "/Acc-fund-transfer",
     },
 
     // =======================================================

@@ -55,6 +55,10 @@ import GroupEmiCollection from "./pages/emi/groupEmiCollection/GroupEmiCollectio
 import OldMemberCollection from "./pages/emi/oldMemberCollection/OldMemberCollection";
 import NewMemberCollection from "./pages/emi/newMemberCollection/NewMemberCollection";
 import DuePenalty from "./pages/emi/duePenalty/DuePenalty";
+import AccFundTransfer from "./pages/AccFundTransfer/AccFundTransfer";
+import AcGroup from "./pages/acgroup/AcGroup";
+import Ledger from "./pages/ledger/Ledger";
+import BranchLedger from "./pages/branchLedger/BranchLedger";
 
 
 // import Disbursement from "./pages/disbursement/Disbursement";
@@ -172,9 +176,22 @@ function App() {
  <Route path="/memeber-collection(new)"element={<Layout><NewMemberCollection/></Layout>}/>
 
   <Route path="/penalty-due"element={<Layout><DuePenalty/></Layout>}/>
+
+  {/* Acconting section */}
+        {/* Acc-Fund Transfer */}
+ <Route path="/Acc-fund-transfer"element={<Layout><AccFundTransfer/></Layout>}/>
+
+                {/* Ac-Group */}
+<Route path="/acgroup"element={<Layout><AcGroup/></Layout>}/>
+
+              {/* Ledger */}
+<Route path="/ledger"element={<Layout><Ledger/></Layout>}/>
+             
+             {/* Branch Ledger */}
+       <Route path="/branch-ledger"element={<Layout><BranchLedger/></Layout>}/>      
    </Routes>
    
-    
+              
 
     
   );
