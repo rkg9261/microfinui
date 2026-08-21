@@ -1,0 +1,183 @@
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/Layout";
+
+import { Login,Register,ForgotPassword,} from "./pages/auth";
+
+import LoanPlan from "./pages/loanplan/LoanPlan";
+import Branches from "./pages/branches/Branches";
+import BranchCenter from "./pages/branchcenter/BranchCenter";
+import StaffBranches from "./pages/staffbranches/StaffBranches";
+// import PenaltyScheme from "./pages/penaltyscheme/PenaltyScheme";
+import Group from "./pages/groups/Group";
+import State from "./pages/state/State";
+import Bank from "./pages/bank/Bank";
+import Designation from "./pages/designation/Designation";
+import Leave from "./pages/leave/Leave";
+import Miscellaneous from "./pages/miscellaneous/Miscellaneous";
+import SoftwareTiming from "./pages/softwaretiming/SoftwareTiming";
+import SessionMaster from "./pages/sessionmaster/SessionMaster";
+import ProductCategory from "./pages/productmaster/productcategory/ProductCategory";
+import ProductBrand from "./pages/productmaster/productbrand/ProductBrand";
+import ProductVariant from "./pages/productmaster/productvariant/ProductVariant";
+import ProductSupplier from "./pages/productmaster/productsupplier/ProductSupplier";
+import Product from "./pages/productmaster/product/Product";
+import ProductLoan from "./pages/productmaster/productloan/ProductLoan";
+import InsuranceParty from "./pages/productmaster/insuranceparty/InsuranceParty";
+import GroupMember from "./pages/customergroup/groupmember/GroupMember";
+import CustomerCgt from "./pages/customergroup/customercgt/CustomerCgt";
+import Member from "./pages/customergroup/member/Member";
+import Disbursement from "./pages/disbursement/disbursement/Disbursement";
+import GroupMemberDisbursement from "./pages/disbursement/groupdisbursement/GroupMemberDisbursement";
+import DayBook from "./pages/accounting/voucher/daybook/DayBook";
+import CashBook from "./pages/accounting/voucher/cashbook/CashBook";
+import VoucherEntries from "./pages/accounting/voucher/voucherentries/VoucherEntries";
+import Payment from "./pages/accounting/voucher/payment/Payment";
+import LoanTopup from "./pages/applyforloan/loantopup/LoanTopup";
+import IndividualLoan from "./pages/applyforloan/individualloan/IndividualLoan";
+import GroupLoan from "./pages/applyforloan/grouploan/GroupLoan";
+import LoanSummary from "./pages/loansummary/LoanSummary";
+import AreaSummary from "./pages/areasummary/AreaSummary";
+import Logs from "./pages/logs/Logs";
+import LoanHistory from "./pages/loanhistory/LoanHistory";
+import LoanApproval from "./pages/approvals/loan/LoanApproval";
+import SalaryApproval from "./pages/approvals/salary/SalaryApproval";
+import Collection from "./pages/approvals/collection/Collection";
+import ProductLoanApproval from "./pages/productloan/ProductLoanApproval";
+import ApprovalSettlement from "./pages/approvals/settlement/ApprovalAettlement";
+import FundTransfer from "./pages/approvals/fundtransfer/FundTransfer";
+import AdvanceSecurity from "./pages/emi/advancesecurity/AdvanceSecurity";
+import PaidEmi from "./pages/emi/paidemi/PaidEmi";
+import DueEmi from "./pages/emi/dueemi/DueEmi";
+import FutureDueEmi from "./pages/futureDueEmi/FutureDueEmi";
+import PromiseToPay from "./pages/emi/promiseToPay/PromiseToPay";
+import GroupEmiCollection from "./pages/emi/groupEmiCollection/GroupEmiCollection";
+import OldMemberCollection from "./pages/emi/oldMemberCollection/OldMemberCollection";
+import NewMemberCollection from "./pages/emi/newMemberCollection/NewMemberCollection";
+import DuePenalty from "./pages/emi/duePenalty/DuePenalty";
+
+
+// import Disbursement from "./pages/disbursement/Disbursement";
+
+
+
+function App() {
+  return (
+    <Routes>
+
+      {/* Authentication */}
+
+      <Route path="/" element={<Navigate to="/login" />} />
+
+      <Route path="/login" element={<Login />} />
+
+      <Route path="/register" element={<Register />} />
+
+      <Route path="/forgot-password" element={<ForgotPassword />}/>
+       
+
+      {/* Dashboard Pages */}
+         {/* MASTER FOLDER PAGES */}
+      <Route path="/loan-plan" element={<Layout><LoanPlan /></Layout>}/>
+      {/* <Route path="/penalty-scheme" element={ <Layout><PenaltyScheme /></Layout>}/> */}
+      <Route path="/branches" element={<Layout><Branches /></Layout> }/>
+      <Route path="/staff-branch" element={<Layout><StaffBranches /></Layout>}/>
+      <Route path="/branch-center"element={<Layout><BranchCenter /></Layout>}/>
+     <Route path="/groups"element={<Layout><Group/></Layout>}/>
+     <Route path="/state"element={<Layout><State/></Layout>}/>
+        <Route path="/bank"element={<Layout><Bank/></Layout>}/>
+        <Route path="/designation"element={<Layout><Designation/></Layout>}/>
+          <Route path="/leave"element={<Layout><Leave/></Layout>}/>
+          <Route path="/miscellaneous"element={<Layout><Miscellaneous/></Layout>}/>
+        <Route path="/software-timing"element={<Layout><SoftwareTiming/></Layout>}/>
+        <Route path="/session"element={<Layout><SessionMaster/></Layout>}/>
+     
+                    {/* PRODUCT MASTER FOLDER PAGES */}
+        <Route path="/product-category"element={<Layout><ProductCategory/></Layout>}/>
+        <Route path="/product-brand"element={<Layout><ProductBrand/></Layout>}/>   
+   <Route path="/product-variant"element={<Layout><ProductVariant/></Layout>}/>
+    <Route path="/product-supplier"element={<Layout><ProductSupplier/></Layout>}/>
+      <Route path="/products"element={<Layout><Product/></Layout>}/>
+      <Route path="/product-loan"element={<Layout><ProductLoan/></Layout>}/>
+         <Route path="/insurance-party"element={<Layout><InsuranceParty/></Layout>}/>
+
+
+         {/*Customer members folder pages */}
+         <Route path="/group-member"element={<Layout><GroupMember/></Layout>}/>
+            <Route path="/memberCgt"element={<Layout><CustomerCgt/></Layout>}/>
+             <Route path="/members"element={<Layout><Member/></Layout>}/>
+
+             {/* Disbursement */}
+             <Route path="/disbursement"element={<Layout><Disbursement/></Layout>}/>
+             <Route path="/group-disbursement"element={<Layout><GroupMemberDisbursement/></Layout>}/>
+  
+                 {/* Accounting/voucher pages */}
+      <Route path="/day-book"element={<Layout><DayBook/></Layout>}/>
+      <Route path="/cash-book"element={<Layout><CashBook/></Layout>}/>
+      <Route path="/voucher-entries"element={<Layout><VoucherEntries/></Layout>}/>
+       <Route path="/payment"element={<Layout><Payment/></Layout>}/>
+        <Route path="/receipt"element={<Layout><Payment/></Layout>}/>
+        <Route path="/contra"element={<Layout><Payment/></Layout>}/>
+        <Route path="/journal"element={<Layout><Payment/></Layout>}/>
+
+        {/* Apply for loan pages */}
+           <Route path="/loan-topup"element={<Layout><LoanTopup/></Layout>}/>
+            <Route path="/individual-loan"element={<Layout><IndividualLoan/></Layout>}/>
+             <Route path="/group-loan"element={<Layout><GroupLoan/></Layout>}/>
+
+             {/* Loan Summary */}
+       <Route path="/loan-summary"element={<Layout><LoanSummary/></Layout>}/>
+
+                  {/* Area survey */}
+         <Route path="/area-survey"element={<Layout><AreaSummary/></Layout>}/>
+
+                    {/* logs records */}
+        <Route path="/log-records"element={<Layout><Logs/></Layout>}/>
+
+                       {/* loan history */}
+            
+            <Route path="/loan-history"element={<Layout><LoanHistory/></Layout>}/>
+
+            {/* APPROVALS */}
+
+               <Route path="/approval-loan"element={<Layout><LoanApproval/></Layout>}/>
+
+      <Route path="/approval-salary"element={<Layout><SalaryApproval/></Layout>}/>
+
+   <Route path="/approval-collection"element={<Layout><Collection/></Layout>}/>
+
+ <Route path="/approve-product-loan"element={<Layout><ProductLoanApproval/></Layout>}/>
+
+  <Route path="/settlement"element={<Layout><ApprovalSettlement/></Layout>}/>
+
+
+   <Route path="/fund-transfer"element={<Layout><FundTransfer/></Layout>}/>
+  
+       {/* EMI  RECORDS*/}
+  
+   <Route path="/emi-advance-security"element={<Layout><AdvanceSecurity/></Layout>}/>
+  
+   <Route path="/paid-emi"element={<Layout><PaidEmi/></Layout>}/>
+
+ <Route path="/due-emi"element={<Layout><DueEmi/></Layout>}/>
+
+ <Route path="/future-due"element={<Layout><FutureDueEmi/></Layout>}/>
+
+ <Route path="/promise-pay"element={<Layout><PromiseToPay/></Layout>}/>
+
+  <Route path="/group-emi"element={<Layout><GroupEmiCollection/></Layout>}/>
+
+ <Route path="/memeber-collection(old)"element={<Layout><OldMemberCollection/></Layout>}/>
+
+ <Route path="/memeber-collection(new)"element={<Layout><NewMemberCollection/></Layout>}/>
+
+  <Route path="/penalty-due"element={<Layout><DuePenalty/></Layout>}/>
+   </Routes>
+   
+    
+
+    
+  );
+}
+
+export default App;
