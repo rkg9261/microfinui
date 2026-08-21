@@ -38,7 +38,7 @@ import IndividualLoan from "./pages/applyforloan/individualloan/IndividualLoan";
 import GroupLoan from "./pages/applyforloan/grouploan/GroupLoan";
 import LoanSummary from "./pages/loansummary/LoanSummary";
 import AreaSummary from "./pages/areasummary/AreaSummary";
-import Logs from "./pages/logs/Logs";
+import LogsRecord from "./pages/logsrecord/LogsRecord";
 import LoanHistory from "./pages/loanhistory/LoanHistory";
 import LoanApproval from "./pages/approvals/loan/LoanApproval";
 import SalaryApproval from "./pages/approvals/salary/SalaryApproval";
@@ -136,7 +136,7 @@ function App() {
          <Route path="/area-survey"element={<Layout><AreaSummary/></Layout>}/>
 
                     {/* logs records */}
-        <Route path="/log-records"element={<Layout><Logs/></Layout>}/>
+        <Route path="/log-records"element={<Layout><LogsRecord/></Layout>}/>
 
                        {/* loan history */}
             

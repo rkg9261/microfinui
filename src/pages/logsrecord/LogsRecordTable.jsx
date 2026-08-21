@@ -2,9 +2,9 @@ import React, { useMemo, useState } from "react";
 
 import EntriesDropdown from "../../components/common/EntriesDropdown";
 
-import "./Logs.css";
+import "./LogsRecord.css";
 
-const LogsTable = ({ branch }) => {
+const LogsRecordTable = ({ branch }) => {
 
   /* =====================================================
      ENTRIES
@@ -321,6 +321,7 @@ const LogsTable = ({ branch }) => {
           <button
             type="button"
             disabled
+            
           >
             ›
           </button>
@@ -333,4 +334,4 @@ const LogsTable = ({ branch }) => {
   );
 };
 
-export default LogsTable;
+export default LogsRecordTable;

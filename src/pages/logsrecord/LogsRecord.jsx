@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import LogsTable from "./LogsTable";
-import "./Logs.css";
+import LogsRecordTable from "./LogsRecordTable";
+import "./LogsRecord.css";
 
-const Logs = () => {
+const LogsRecord = () => {
   const [branch, setBranch] = useState("");
 
   const handleClearBranch = () => {
@@ -110,7 +110,7 @@ const Logs = () => {
           LOG TABLE
       ===================================================== */}
 
-      <LogsTable
+      <LogsRecordTable
         branch={branch}
       />
 
@@ -118,4 +118,4 @@ const Logs = () => {
   );
 };
 
-export default Logs;
+export default LogsRecord;
