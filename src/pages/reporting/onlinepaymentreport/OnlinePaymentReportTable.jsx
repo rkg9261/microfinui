@@ -6,6 +6,8 @@ import {
 
 import EntriesDropdown from "../../../components/common/EntriesDropdown";
 
+import "../../../components/common/Table.css";
+
 import {
   ViewButton,
 } from "../../../components/buttons";
@@ -191,12 +193,12 @@ const OnlinePaymentReportTable = ({
 
 
       {/* =====================================================
-          TABLE
+          COMMON TABLE
       ===================================================== */}
 
-      <div className="online-payment-report-table-scroll">
+      <div className="common-table-wrapper">
 
-        <table className="online-payment-report-table">
+        <table className="common-table">
 
 
           <thead>
@@ -247,7 +249,7 @@ const OnlinePaymentReportTable = ({
                 STATUS
               </th>
 
-              <th className="online-payment-action-heading">
+              <th className="action-column">
                 ACTION
               </th>
 
@@ -348,6 +350,8 @@ const OnlinePaymentReportTable = ({
 
                   <td>
 
+                    {/* STATUS CLASS NOT CHANGED */}
+
                     <span className="online-payment-success">
 
                       {item.status}
@@ -361,9 +365,9 @@ const OnlinePaymentReportTable = ({
                       ACTION
                   ================================================= */}
 
-                  <td className="online-payment-action-cell">
+                  <td className="action-column">
 
-                    <div className="online-payment-action-buttons">
+                    <div className="action-cell">
 
                       <ViewButton
                         onClick={() =>
@@ -386,7 +390,7 @@ const OnlinePaymentReportTable = ({
 
                 <td
                   colSpan="11"
-                  className="online-payment-no-data"
+                  className="common-table-empty"
                 >
 
                   No payment records found

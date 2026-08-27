@@ -2,7 +2,10 @@ import React, { useMemo, useState } from "react";
 
 import EntriesDropdown from "../../../components/common/EntriesDropdown";
 
-const CibilReportEquifaxTable = ({ data }) => {
+import "../../../components/common/Table.css";
+
+
+const CibilReportEquifaxTable = ({ data = [] }) => {
 
   // =========================================================
   // STATES
@@ -13,6 +16,7 @@ const CibilReportEquifaxTable = ({ data }) => {
   const [search, setSearch] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
+
 
   // =========================================================
   // SEARCH
@@ -42,6 +46,7 @@ const CibilReportEquifaxTable = ({ data }) => {
 
   }, [data, search]);
 
+
   // =========================================================
   // PAGINATION
   // =========================================================
@@ -63,6 +68,7 @@ const CibilReportEquifaxTable = ({ data }) => {
       endIndex
     );
 
+
   // =========================================================
   // ENTRIES CHANGE
   // =========================================================
@@ -75,6 +81,7 @@ const CibilReportEquifaxTable = ({ data }) => {
 
   };
 
+
   // =========================================================
   // SEARCH CHANGE
   // =========================================================
@@ -86,6 +93,7 @@ const CibilReportEquifaxTable = ({ data }) => {
     setCurrentPage(1);
 
   };
+
 
   // =========================================================
   // PAGE CHANGE
@@ -103,6 +111,7 @@ const CibilReportEquifaxTable = ({ data }) => {
     }
 
   };
+
 
   // =========================================================
   // RETURN
@@ -164,12 +173,12 @@ const CibilReportEquifaxTable = ({ data }) => {
 
 
       {/* =====================================================
-          TABLE
+          COMMON TABLE
       ===================================================== */}
 
-      <div className="cibil-equifax-table-wrapper">
+      <div className="common-table-wrapper">
 
-        <table className="cibil-equifax-table">
+        <table className="common-table">
 
           <thead>
 
@@ -252,6 +261,8 @@ const CibilReportEquifaxTable = ({ data }) => {
 
                   <td>
 
+                    {/* STATUS CLASS NOT CHANGED */}
+
                     <span
                       className={
                         item.status === "COMPLETED"
@@ -276,7 +287,7 @@ const CibilReportEquifaxTable = ({ data }) => {
 
                 <td
                   colSpan="8"
-                  className="cibil-equifax-no-data"
+                  className="common-table-empty"
                 >
 
                   No records found

@@ -7,6 +7,8 @@ import {
 
 import EntriesDropdown from "../../../components/common/EntriesDropdown";
 
+import "../../../components/common/Table.css";
+
 
 const CibilReportExperianTable = ({
   data = [],
@@ -230,12 +232,12 @@ const CibilReportExperianTable = ({
 
 
       {/* =====================================================
-          TABLE
+          COMMON TABLE
       ===================================================== */}
 
-      <div className="cibil-report-experian-table-scroll">
+      <div className="common-table-wrapper">
 
-        <table className="cibil-report-experian-table">
+        <table className="common-table">
 
 
           {/* =================================================
@@ -427,7 +429,7 @@ const CibilReportExperianTable = ({
 
                 <td
                   colSpan="8"
-                  className="cibil-no-data"
+                  className="common-table-empty"
                 >
 
                   No records found

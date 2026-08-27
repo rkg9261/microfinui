@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import EntriesDropdown from "../../../components/common/EntriesDropdown";
+import "../../../components/common/Table.css";
 
 import {
   ViewButton,
@@ -216,12 +217,12 @@ const SettlementReportTable = ({
 
 
       {/* =====================================================
-          TABLE
+          COMMON TABLE
       ===================================================== */}
 
-      <div className="settlement-table-scroll">
+      <div className="common-table-wrapper">
 
-        <table className="settlement-report-table">
+        <table className="common-table">
 
           <thead>
 
@@ -301,7 +302,7 @@ const SettlementReportTable = ({
                 STATUS
               </th>
 
-              <th className="settlement-action-heading">
+              <th className="action-column">
                 ACTION
               </th>
 
@@ -428,6 +429,8 @@ const SettlementReportTable = ({
 
                   <td>
 
+                    {/* STATUS CLASS NOT CHANGED */}
+
                     <span
                       className={
                         item.status === "APPROVED"
@@ -442,17 +445,15 @@ const SettlementReportTable = ({
 
 
                   {/* =================================================
-                      IMPORTANT ACTION BUTTONS
+                      ACTION BUTTONS
                   ================================================= */}
 
-                  <td className="settlement-action-cell">
+                  <td className="action-column">
 
-                    <div className="settlement-action-buttons">
+                    <div className="action-cell">
 
 
-                      {/* ================================
-                          VIEW BUTTON
-                      ================================= */}
+                      {/* VIEW BUTTON */}
 
                       <ViewButton
                         title="View"
@@ -462,9 +463,7 @@ const SettlementReportTable = ({
                       />
 
 
-                      {/* ================================
-                          DELETE BUTTON
-                      ================================= */}
+                      {/* DELETE BUTTON */}
 
                       <DeleteButton
                         onClick={() =>
@@ -487,7 +486,7 @@ const SettlementReportTable = ({
 
                 <td
                   colSpan="15"
-                  className="settlement-no-data"
+                  className="common-table-empty"
                 >
                   No settlement records found
                 </td>

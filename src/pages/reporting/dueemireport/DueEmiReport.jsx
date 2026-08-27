@@ -50,47 +50,7 @@ const DueEmiReport = () => {
       status: "DUE",
     },
 
-    {
-      id: 3,
-      loanId: "LN10003",
-      memberName: "PRIYA DEVI",
-      memberCode: "MEM003",
-      mobile: "9876543212",
-      type: "WEEKLY",
-      collectionCenter: "CENTER A",
-      emiDate: "08/27/2026",
-      dues: 3,
-      emi: 1200,
-      status: "OVERDUE",
-    },
 
-    {
-      id: 4,
-      loanId: "LN10004",
-      memberName: "SUNIL KUMAR",
-      memberCode: "MEM004",
-      mobile: "9876543213",
-      type: "MONTHLY",
-      collectionCenter: "CENTER C",
-      emiDate: "08/27/2026",
-      dues: 1,
-      emi: 2200,
-      status: "DUE",
-    },
-
-    {
-      id: 5,
-      loanId: "LN10005",
-      memberName: "NEHA SINGH",
-      memberCode: "MEM005",
-      mobile: "9876543214",
-      type: "MONTHLY",
-      collectionCenter: "CENTER B",
-      emiDate: "08/27/2026",
-      dues: 2,
-      emi: 3000,
-      status: "OVERDUE",
-    },
   ]);
 
   // =========================================================

@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import EntriesDropdown from "../../../components/common/EntriesDropdown";
+import "../../../components/common/Table.css";
 
 import {
   FaSearch,
@@ -248,12 +249,12 @@ const DisbursementReportTable = ({
 
 
       {/* =====================================================
-          TABLE SCROLL
+          COMMON TABLE
       ===================================================== */}
 
-      <div className="disbursement-table-scroll">
+      <div className="common-table-wrapper">
 
-        <table className="disbursement-report-table">
+        <table className="common-table">
 
           <thead>
 
@@ -367,7 +368,8 @@ const DisbursementReportTable = ({
 
                     <td className="disbursement-money">
 
-                      ₹ {Number(
+                      ₹{" "}
+                      {Number(
                         item.loanAmount
                       ).toLocaleString("en-IN")}
 
@@ -375,7 +377,8 @@ const DisbursementReportTable = ({
 
                     <td className="disbursement-money">
 
-                      ₹ {Number(
+                      ₹{" "}
+                      {Number(
                         item.disbAmount
                       ).toLocaleString("en-IN")}
 
@@ -390,6 +393,8 @@ const DisbursementReportTable = ({
                     </td>
 
                     <td>
+
+                      {/* STATUS CLASS NOT CHANGED */}
 
                       <span
                         className={
@@ -417,7 +422,7 @@ const DisbursementReportTable = ({
 
                 <td
                   colSpan="14"
-                  className="disbursement-no-data"
+                  className="common-table-empty"
                 >
 
                   No disbursement records found

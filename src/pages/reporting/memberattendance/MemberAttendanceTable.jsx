@@ -6,6 +6,8 @@ import {
 
 import EntriesDropdown from "../../../components/common/EntriesDropdown";
 
+import "../../../components/common/Table.css";
+
 import {
   ViewButton,
   DeleteButton,
@@ -166,12 +168,12 @@ const MemberAttendanceTable = ({
 
 
       {/* =====================================================
-          TABLE
+          COMMON TABLE
       ===================================================== */}
 
-      <div className="member-attendance-table-scroll">
+      <div className="common-table-wrapper">
 
-        <table className="member-attendance-table">
+        <table className="common-table">
 
 
           <thead>
@@ -222,7 +224,7 @@ const MemberAttendanceTable = ({
                 BY
               </th>
 
-              <th className="member-attendance-action-heading">
+              <th className="action-column">
                 ACTION
               </th>
 
@@ -273,6 +275,8 @@ const MemberAttendanceTable = ({
                   {/* ATTENDANCE */}
 
                   <td>
+
+                    {/* Attendance class NOT changed */}
 
                     <span
                       className={
@@ -328,9 +332,9 @@ const MemberAttendanceTable = ({
                       ACTION
                   ================================================= */}
 
-                  <td className="member-attendance-action-cell">
+                  <td className="action-column">
 
-                    <div className="member-attendance-action-buttons">
+                    <div className="action-cell">
 
 
                       {/* VIEW */}
@@ -366,7 +370,7 @@ const MemberAttendanceTable = ({
 
                 <td
                   colSpan="10"
-                  className="member-attendance-no-data"
+                  className="common-table-empty"
                 >
 
                   No attendance records found
