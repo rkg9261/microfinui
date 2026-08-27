@@ -61,16 +61,16 @@ const BranchLedgerTable = ({
           TABLE
       ======================================== */}
 
-      <div className="branch-ledger-table-wrapper">
+      <div className="common-table-wrapper">
 
-        <table className="branch-ledger-table">
+        <table className="common-table">
 
           <thead>
 
             <tr>
 
               <th className="branch-ledger-number">
-                #
+               S No
               </th>
 
               <th>
@@ -126,7 +126,7 @@ const BranchLedgerTable = ({
 
                 <td
                   colSpan="4"
-                  className="branch-ledger-no-data"
+                  className="common-table-empty"
                 >
                   NO DATA FOUND
                 </td>

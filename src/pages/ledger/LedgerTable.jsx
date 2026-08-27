@@ -49,9 +49,9 @@ const LedgerTable = ({
 
       {/* TABLE */}
 
-      <div className="ledger-table-scroll">
+      <div className="common-table-wrapper">
 
-        <table className="ledger-table">
+        <table className="common-table">
 
           <thead>
 
@@ -73,7 +73,7 @@ const LedgerTable = ({
                 STATUS
               </th>
 
-              <th className="ledger-actions-heading">
+              <th className="action-column">
                 ACTIONS
               </th>
 
@@ -116,18 +116,22 @@ const LedgerTable = ({
 
                   </td>
 
-                  <td className="ledger-action-cell">
+                  <td className="action-column">
 
-                    <button
-                      type="button"
-                      className="ledger-edit-button"
-                      onClick={() =>
-                        onEdit(item)
-                      }
-                      title="Edit Ledger"
-                    >
-                      <FaEdit />
-                    </button>
+                    <div className="action-cell">
+
+                      <button
+                        type="button"
+                        className="ledger-edit-button"
+                        onClick={() =>
+                          onEdit(item)
+                        }
+                        title="Edit Ledger"
+                      >
+                        <FaEdit />
+                      </button>
+
+                    </div>
 
                   </td>
 
@@ -141,7 +145,7 @@ const LedgerTable = ({
 
                 <td
                   colSpan="5"
-                  className="ledger-no-data"
+                  className="common-table-empty"
                 >
                   NO DATA FOUND
                 </td>

@@ -1,6 +1,8 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 
+import "../../components/common/Table.css";
+
 const AcGroupTable = ({ groups, onEdit }) => {
   return (
     <div className="acgroup-table-wrapper">
@@ -16,36 +18,62 @@ const AcGroupTable = ({ groups, onEdit }) => {
         </span>
       </div>
 
-      <div className="acgroup-table-scroll">
 
-        <table className="acgroup-table">
+      {/* =====================================================
+          COMMON TABLE
+      ===================================================== */}
+
+      <div className="common-table-wrapper">
+
+        <table className="common-table">
 
           <thead>
+
             <tr>
-              <th>GROUP</th>
-              <th>TYPE</th>
-              <th>STATUS</th>
-              <th className="acgroup-action-header">
+
+              <th>
+                GROUP
+              </th>
+
+              <th>
+                TYPE
+              </th>
+
+              <th>
+                STATUS
+              </th>
+
+              <th className="action-column">
                 ACTION
               </th>
+
             </tr>
+
           </thead>
+
 
           <tbody>
 
             {groups.length > 0 ? (
+
               groups.map((item) => (
+
                 <tr key={item.id}>
 
                   <td className="acgroup-name">
                     {item.group}
                   </td>
 
+
                   <td>
                     {item.type}
                   </td>
 
+
                   <td>
+
+                    {/* STATUS CLASS NOT CHANGED */}
+
                     <span
                       className={
                         item.status === "Active"
@@ -53,34 +81,54 @@ const AcGroupTable = ({ groups, onEdit }) => {
                           : "acgroup-status inactive"
                       }
                     >
+
                       {item.status.toUpperCase()}
+
                     </span>
+
                   </td>
 
-                  <td className="acgroup-action-cell">
 
-                    <button
-                      type="button"
-                      className="acgroup-edit-button"
-                      onClick={() => onEdit(item)}
-                      title="Edit"
-                    >
-                      <FaEdit />
-                    </button>
+                  {/* ACTION */}
+
+                  <td className="action-column">
+
+                    <div className="action-cell">
+
+                      <button
+                        type="button"
+                        className="acgroup-edit-button"
+                        onClick={() => onEdit(item)}
+                        title="Edit"
+                      >
+
+                        <FaEdit />
+
+                      </button>
+
+                    </div>
 
                   </td>
 
                 </tr>
+
               ))
+
             ) : (
+
               <tr>
+
                 <td
                   colSpan="4"
-                  className="acgroup-no-data"
+                  className="common-table-empty"
                 >
+
                   NO DATA FOUND
+
                 </td>
+
               </tr>
+
             )}
 
           </tbody>
@@ -89,13 +137,20 @@ const AcGroupTable = ({ groups, onEdit }) => {
 
       </div>
 
-      {/* TABLE FOOTER */}
+
+      {/* =====================================================
+          TABLE FOOTER
+      ===================================================== */}
+
       <div className="acgroup-table-footer">
 
         <div>
+
           Showing 1 to {groups.length} of{" "}
           {groups.length} entries
+
         </div>
+
 
         <div className="acgroup-pagination">
 
