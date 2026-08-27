@@ -1,6 +1,4 @@
-import React, {
-  useState,
-} from "react";
+import React, { useState } from "react";
 
 import {
   EditButton,
@@ -9,151 +7,81 @@ import {
 
 import EntriesDropdown from "../../components/common/EntriesDropdown";
 
-import {
-  getPenaltySchemeById,
-  deletePenaltyScheme,
-} from "../../api/penaltySchemeApi";
-
-
 const PenaltySchemeTable = ({
   data,
   onEdit,
   onDeleteSuccess,
 }) => {
 
+  // =========================================
+  // ENTRIES
+  // =========================================
 
-  const [entries, setEntries] =
-    useState(10);
+  const [entries, setEntries] = useState(10);
 
+
+  // =========================================
   // EDIT
+  // =========================================
 
-  const handleEdit = async (id) => {
+  const handleEdit = (item) => {
 
-    try {
+    console.log("Selected Penalty Scheme:", item);
 
-      console.log(
-        "Getting penalty scheme:",
-        id
-      );
-
-
-      const response =
-        await getPenaltySchemeById(id);
-
-
-      console.log(
-        "Edit Data:",
-        response
-      );
-
-
-     
-      const selectedData =
-        response?.data ?? response;
-
-
-   
-      onEdit(selectedData);
-
-
-    } catch (error) {
-
-      console.error(
-        "Get penalty scheme error:",
-        error
-      );
-
-
-      alert(
-        "Unable to load penalty scheme"
-      );
-
-    }
-
+    // Directly send selected item to parent
+    onEdit(item);
   };
 
 
+  // =========================================
   // DELETE
+  // =========================================
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
 
-
-    const confirmDelete =
-      window.confirm(
-        "Are you sure you want to delete this penalty scheme?"
-      );
-
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this penalty scheme?"
+    );
 
     if (!confirmDelete) {
-
       return;
-
     }
 
+    // Delete directly from React state
+    onDeleteSuccess(id);
 
-    try {
-
-      console.log(
-        "Deleting penalty scheme:",
-        id
-      );
-
-
-      await deletePenaltyScheme(id);
-
-
-      alert(
-        "Penalty Scheme deleted successfully"
-      );
-
-
-      // Reload GET data
-      onDeleteSuccess();
-
-
-    } catch (error) {
-
-      console.error(
-        "Delete penalty scheme error:",
-        error
-      );
-
-
-      alert(
-        "Unable to delete penalty scheme"
-      );
-
-    }
-
+    alert(
+      "Penalty Scheme deleted successfully"
+    );
   };
 
 
+  // =========================================
   // JSX
+  // =========================================
 
   return (
-
     <div className="table-wrapper">
 
-
-      {/* ENTRIES*/}
+      {/* =====================================
+          ENTRIES
+      ====================================== */}
 
       <EntriesDropdown
-
         value={entries}
-
         onChange={setEntries}
-
       />
 
 
-      {/* TABLE */}
-          
-      
+      {/* =====================================
+          TABLE
+      ====================================== */}
 
       <table className="common-table">
 
-
-        {/*  HEADER*/}
+        {/* ===================================
+            HEADER
+        ==================================== */}
 
         <thead>
 
@@ -208,23 +136,19 @@ const PenaltySchemeTable = ({
         </thead>
 
 
-        {/* 
+        {/* ===================================
             BODY
-         */}
+        ==================================== */}
 
         <tbody>
 
-
           {data.length > 0 ? (
-
 
             data
               .slice(0, entries)
               .map((item, index) => (
 
-
                 <tr key={item.id}>
-
 
                   {/* Sr No */}
 
@@ -236,56 +160,62 @@ const PenaltySchemeTable = ({
                   {/* Scheme */}
 
                   <td>
-                    {item.schemeName}
+                    {item.schemeName || "-"}
                   </td>
 
 
                   {/* Type */}
 
                   <td>
-                    {item.penaltyType}
+                    {item.penaltyType || "-"}
                   </td>
 
 
                   {/* Amount */}
 
                   <td>
-                    ₹{item.amount}
+                    {item.amount !== undefined &&
+                    item.amount !== null
+                      ? `₹${item.amount}`
+                      : "-"}
                   </td>
 
 
                   {/* Minimum Amount */}
 
                   <td>
-                    ₹{item.minimumAmount}
+                    {item.minimumAmount !== undefined &&
+                    item.minimumAmount !== null
+                      ? `₹${item.minimumAmount}`
+                      : "-"}
                   </td>
 
 
                   {/* Grace Period */}
 
                   <td>
-                    {item.gracePeriod}
+                    {item.gracePeriod || "-"}
                   </td>
 
 
                   {/* Penalty Mode */}
 
                   <td>
-                    {item.penaltyMode}
+                    {item.penaltyMode || "-"}
                   </td>
 
 
                   {/* Recurring */}
 
                   <td>
-                    {item.recurring}
+                    {item.recurring || "-"}
                   </td>
 
 
-                  {/* Created */}
+                  {/* Created At */}
 
                   <td>
-                    {item.createdAt}
+                    {item.createdAt || "-"}
                   </td>
 
 
@@ -294,18 +224,13 @@ const PenaltySchemeTable = ({
                   <td>
 
                     <span
-                      className={
-                        `table-status ${
-                          item.status ===
-                          "ACTIVE"
-                            ? "active"
-                            : "inactive"
-                        }`
-                      }
+                      className={`table-status ${
+                        item.status === "ACTIVE"
+                          ? "active"
+                          : "inactive"
+                      }`}
                     >
-
-                      {item.status}
-
+                      {item.status || "-"}
                     </span>
 
                   </td>
@@ -317,79 +242,52 @@ const PenaltySchemeTable = ({
 
                     <div className="table-action">
 
-
-                      {/*  EDIT */}
-                         
-                      
+                      {/* EDIT */}
 
                       <EditButton
-
                         onClick={() =>
-                          handleEdit(
-                            item.id
-                          )
+                          handleEdit(item)
                         }
-
                       />
 
 
-                      {/*  DELETE*/}
-                         
-                       
+                      {/* DELETE */}
 
                       <DeleteButton
-
                         onClick={() =>
-                          handleDelete(
-                            item.id
-                          )
+                          handleDelete(item.id)
                         }
-
                       />
-
 
                     </div>
 
                   </td>
 
-
                 </tr>
 
               ))
 
-
           ) : (
-
 
             <tr>
 
               <td
-
                 colSpan="11"
-
                 className="table-empty"
-
               >
-
                 No Penalty Scheme Found
-
               </td>
 
             </tr>
 
-
           )}
-
 
         </tbody>
 
       </table>
 
     </div>
-
   );
-
 };
-
 
 export default PenaltySchemeTable;

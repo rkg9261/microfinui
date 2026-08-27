@@ -36,6 +36,8 @@ import {
 const Sidebar = ({
   sidebarOpen,
   setSidebarOpen,
+  hoverEnabled,
+  setHoverEnabled,
 }) => {
 
   // =========================================================
@@ -49,6 +51,13 @@ const Sidebar = ({
   // =========================================================
 
   const [openAccountingMenu, setOpenAccountingMenu] =
+    useState("");
+
+  // =========================================================
+  // REPORTING SUB MENU STATE
+  // =========================================================
+
+  const [openReportingMenu, setOpenReportingMenu] =
     useState("");
 
   // =========================================================
@@ -67,6 +76,16 @@ const Sidebar = ({
 
   const toggleAccountingMenu = (menu) => {
     setOpenAccountingMenu((prev) =>
+      prev === menu ? "" : menu
+    );
+  };
+
+  // =========================================================
+  // REPORTING MENU TOGGLE
+  // =========================================================
+
+  const toggleReportingMenu = (menu) => {
+    setOpenReportingMenu((prev) =>
       prev === menu ? "" : menu
     );
   };
@@ -156,19 +175,19 @@ const Sidebar = ({
         },
 
         {
-          title: "SETTING",
-          path: "/setting",
+          title: "SETTING MASTER",
+          path: "/setting-master;",
         },
 
-        {
-          title: "SMS TESTING",
-          path: "/sms-testing",
-        },
+        // {
+        //   title: "SMS TESTING",
+        //   path: "/sms-testing",
+        // },
 
-        {
-          title: "SERIES",
-          path: "/series",
-        },
+        // {
+        //   title: "SERIES",
+        //   path: "/series",
+        // },
 
       ],
     },
@@ -219,42 +238,6 @@ const Sidebar = ({
         {
           title: "INSURANCE PARTY",
           path: "/insurance-party",
-        },
-
-      ],
-    },
-
-    // =======================================================
-    // HRM
-    // =======================================================
-
-    {
-      title: "HRM",
-      key: "hrm",
-      icon: (
-        <FaUsers className="icon-purple" />
-      ),
-
-      submenu: [
-
-        {
-          title: "Employee",
-          path: "/employee",
-        },
-
-        {
-          title: "Attendance",
-          path: "/attendance",
-        },
-
-        {
-          title: "Salary",
-          path: "/salary",
-        },
-
-        {
-          title: "Leave",
-          path: "/leave",
         },
 
       ],
@@ -378,8 +361,7 @@ const Sidebar = ({
         <FaMoneyBillWave className="icon-yellow" />
       ),
 
-     
-        submenu: [
+      submenu: [
 
         {
           title: "ADVANCE SECURITY",
@@ -395,7 +377,7 @@ const Sidebar = ({
           title: "DUE EMI",
           path: "/due-emi",
         },
-        
+
         {
           title: "DUE PENALTY",
           path: "/penalty-due",
@@ -405,6 +387,7 @@ const Sidebar = ({
           title: "FUTURE DUE EMIS",
           path: "/future-due",
         },
+
         {
           title: "PROMISE TO PAY",
           path: "/promise-pay",
@@ -415,17 +398,16 @@ const Sidebar = ({
           path: "/group-emi",
         },
 
-        
         {
           title: "MEMEBER COLLECTION (OLD)",
           path: "/memeber-collection(old)",
         },
+
         {
           title: "MEMEBER COLLECTION (NEW)",
           path: "/memeber-collection(new)",
         },
 
-        
       ],
     },
 
@@ -440,9 +422,7 @@ const Sidebar = ({
         <FaCheckSquare className="icon-pink" />
       ),
 
-     
-
-        submenu: [
+      submenu: [
 
         {
           title: "LOAN",
@@ -463,6 +443,7 @@ const Sidebar = ({
           title: "PRODUCT-LOAN",
           path: "/approve-product-loan",
         },
+
         {
           title: "SETTLEMENT",
           path: "/settlement",
@@ -472,6 +453,7 @@ const Sidebar = ({
           title: "FUND TRANSFER",
           path: "/fund-transfer",
         },
+
       ],
     },
 
@@ -486,22 +468,34 @@ const Sidebar = ({
         <FaFolderOpen className="icon-brown" />
       ),
 
-      path: "/loan-case",
+      submenu: [
+
+        {
+          title: "LOAN SETTLEMENT",
+          path: "/loan-settlement",
+        },
+
+        {
+          title: "DEATH MEMBER LIST",
+          path: "/death-member-list",
+        },
+
+      ],
     },
 
     // =======================================================
     // CIBIL FORMAT DOWNLOAD
     // =======================================================
 
-    {
-      title: "CIBIL FORMAT DOWNLOAD",
-      key: "cibil-format-download",
-      icon: (
-        <FaDownload className="icon-orange" />
-      ),
+    // {
+    //   title: "CIBIL FORMAT DOWNLOAD",
+    //   key: "cibil-format-download",
+    //   icon: (
+    //     <FaDownload className="icon-orange" />
+    //   ),
 
-      path: "/cibil-format-download",
-    },
+    //   path: "/cibil-format-download",
+    // },
 
     // =======================================================
     // AREA SURVEY
@@ -656,29 +650,29 @@ const Sidebar = ({
     // PROFIT LOSS
     // =======================================================
 
-    {
-      title: "PROFIT-LOSS",
-      key: "profit-loss",
-      icon: (
-        <FaChartLine className="accounting-icon-green" />
-      ),
+    // {
+    //   title: "PROFIT-LOSS",
+    //   key: "profit-loss",
+    //   icon: (
+    //     <FaChartLine className="accounting-icon-green" />
+    //   ),
 
-      path: "/profit-loss",
-    },
+    //   path: "/profit-loss",
+    // },
 
     // =======================================================
     // OVERVIEW
     // =======================================================
 
-    {
-      title: "OVERVIEW",
-      key: "overview",
-      icon: (
-        <FaEye className="accounting-icon-yellow" />
-      ),
+    // {
+    //   title: "OVERVIEW",
+    //   key: "overview",
+    //   icon: (
+    //     <FaEye className="accounting-icon-yellow" />
+    //   ),
 
-      path: "/overview",
-    },
+    //   path: "/overview",
+    // },
 
     // =======================================================
     // LEDGER
@@ -718,7 +712,59 @@ const Sidebar = ({
 
     {
       title: "REPORTING",
-      path: "/reporting",
+      key: "reporting",
+      icon: (
+        <FaFileAlt className="accounting-icon-blue" />
+      ),
+
+      submenu: [
+
+        {
+          title: "LOAN REPORT",
+          path: "/loan-report",
+        },
+
+        {
+          title: "DUE EMI REPORTING",
+          path: "/due-emi-reporting",
+        },
+
+        {
+          title: "COLLECTION REPORTING",
+          path: "/collection-reporting",
+        },
+
+        {
+          title: "DISBURSEMENT REPORTING",
+          path: "/disbursement-reporting",
+        },
+
+        {
+          title: "SETTLEMENT REPORTING",
+          path: "/settlement-reporting",
+        },
+
+        {
+          title: "MEMBER ATTENDANCE",
+          path: "/member-attendance",
+        },
+
+        {
+          title: "ONLINE PAYMENT REPORTING",
+          path: "/online-payment-reporting",
+        },
+
+        {
+          title: "EXPERIAN CIBIL REPORT",
+          path: "/experian-cibil-report",
+        },
+
+        {
+          title: "EQUIFAX CIBIL REPORT",
+          path: "/equifax-cibil-report",
+        },
+
+      ],
     },
 
   ];
@@ -732,13 +778,21 @@ const Sidebar = ({
           : "close"
       }`}
 
-      onMouseEnter={() =>
-        setSidebarOpen(true)
-      }
+      onMouseEnter={() => {
 
-      onMouseLeave={() =>
-        setSidebarOpen(false)
-      }
+        if (hoverEnabled) {
+          setSidebarOpen(true);
+        }
+
+      }}
+
+      onMouseLeave={() => {
+
+        if (hoverEnabled) {
+          setSidebarOpen(false);
+        }
+
+      }}
     >
 
       {/* =====================================================
@@ -817,10 +871,6 @@ const Sidebar = ({
           key={item.key}
         >
 
-          {/* =================================================
-              MENU WITH SUBMENU
-          ================================================= */}
-
           {item.submenu ? (
 
             <>
@@ -887,10 +937,6 @@ const Sidebar = ({
 
           ) : (
 
-            /* =================================================
-               NORMAL MENU LINK
-            ================================================= */
-
             <NavLink
               to={item.path}
 
@@ -940,10 +986,6 @@ const Sidebar = ({
               className="accounting-block"
               key={item.key}
             >
-
-              {/* =================================================
-                  ITEMS WITH SUBMENU
-              ================================================= */}
 
               {item.submenu ? (
 
@@ -1022,10 +1064,6 @@ const Sidebar = ({
 
               ) : (
 
-                /* =================================================
-                   NORMAL ACCOUNTING LINK
-                ================================================= */
-
                 <NavLink
                   to={item.path}
 
@@ -1066,43 +1104,134 @@ const Sidebar = ({
       </div>
 
       {/* =====================================================
-          REPORTING
+          REPORTING MENU
       ===================================================== */}
 
-      {reportingItems.map(
-        (item) => (
+      <div className="reporting-menu">
 
-          <NavLink
-            key={item.path}
-            to={item.path}
+        {reportingItems.map(
+          (item) => (
 
-            className={({ isActive }) =>
-              isActive
-                ? "sidebar-item active"
-                : "sidebar-item"
-            }
-          >
+            <div
+              className="reporting-block"
+              key={item.key}
+            >
 
-            <div className="sidebar-left">
+              {item.submenu ? (
 
-              <FaFileAlt
-                className="accounting-icon-blue"
-              />
+                <>
 
-              <span>
-                {item.title}
-              </span>
+                  {/* =========================================
+                      REPORTING MAIN BUTTON
+                  ========================================= */}
+
+                  <div
+                    className="sidebar-item reporting-item"
+                    onClick={() =>
+                      toggleReportingMenu(
+                        item.key
+                      )
+                    }
+                  >
+
+                    <div className="sidebar-left">
+
+                      {item.icon}
+
+                      <span>
+                        {item.title}
+                      </span>
+
+                    </div>
+
+                    <FaChevronRight
+                      className={`arrow reporting-arrow ${
+                        openReportingMenu ===
+                        item.key
+                          ? "rotate"
+                          : ""
+                      }`}
+                    />
+
+                  </div>
+
+                  {/* =========================================
+                      REPORTING SUBMENU
+                  ========================================= */}
+
+                  <div
+                    className={`reporting-submenu ${
+                      openReportingMenu ===
+                      item.key
+                        ? "show"
+                        : ""
+                    }`}
+                  >
+
+                    {item.submenu.map(
+                      (
+                        sub,
+                        index
+                      ) => (
+
+                        <NavLink
+                          key={index}
+                          to={sub.path}
+
+                          className={({ isActive }) =>
+                            isActive
+                              ? "reporting-submenu-item reporting-submenu-active"
+                              : "reporting-submenu-item"
+                          }
+                        >
+
+                          <span className="reporting-radio">
+                            ○
+                          </span>
+
+                          {sub.title}
+
+                        </NavLink>
+
+                      )
+                    )}
+
+                  </div>
+
+                </>
+
+              ) : (
+
+                <NavLink
+                  to={item.path}
+
+                  className={({ isActive }) =>
+                    isActive
+                      ? "sidebar-item active"
+                      : "sidebar-item"
+                  }
+                >
+
+                  <div className="sidebar-left">
+
+                    {item.icon}
+
+                    <span>
+                      {item.title}
+                    </span>
+
+                  </div>
+
+                </NavLink>
+
+              )}
 
             </div>
 
-            <FaChevronRight
-              className="arrow"
-            />
+          )
+        )}
 
-          </NavLink>
-
-        )
-      )}
+      </div>
 
     </aside>
 

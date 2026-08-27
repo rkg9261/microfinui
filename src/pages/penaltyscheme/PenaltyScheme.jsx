@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./PenaltyScheme.css";
 import "../../components/common/Table.css";
@@ -9,260 +9,179 @@ import PenaltySchemeForm from "./PenaltySchemeForm";
 
 import { AddButton } from "../../components/buttons";
 
-import {
-  getPenaltySchemes,
-  createPenaltyScheme,
-  updatePenaltyScheme,
-} from "../../api/penaltySchemeApi";
-
-
 const PenaltyScheme = () => {
+  // =========================================
+  // INITIAL STATIC DATA
+  // =========================================
 
- 
+const [penaltySchemes, setPenaltySchemes] = useState([
+  {
+    id: 1,
+    schemeName: "Late Payment Penalty",
+    penaltyType: "Percentage",
+    amount: 2,
+    minimumAmount: 100,
+    gracePeriod: "5 Days",
+    penaltyMode: "Monthly",
+    recurring: "Yes",
+    createdAt: "26 Aug 2026",
+    status: "ACTIVE",
+  },
+
+  {
+    id: 2,
+    schemeName: "Overdue Loan Penalty",
+    penaltyType: "Fixed Amount",
+    amount: 500,
+    minimumAmount: 500,
+    gracePeriod: "7 Days",
+    penaltyMode: "Monthly",
+    recurring: "Yes",
+    createdAt: "25 Aug 2026",
+    status: "ACTIVE",
+  },
+
+  {
+    id: 3,
+    schemeName: "EMI Delay Penalty",
+    penaltyType: "Percentage",
+    amount: 1.5,
+    minimumAmount: 50,
+    gracePeriod: "3 Days",
+    penaltyMode: "Daily",
+    recurring: "Yes",
+    createdAt: "24 Aug 2026",
+    status: "ACTIVE",
+  },
+
+
+]);
+
+  // =========================================
   // STATES
- 
+  // =========================================
 
   const [search, setSearch] = useState("");
 
   const [openForm, setOpenForm] = useState(false);
 
-  const [penaltySchemes, setPenaltySchemes] = useState([]);
-
-  // Selected record for Edit
   const [editData, setEditData] = useState(null);
 
-
- 
-  // GET ALL PENALTY SCHEMES
- 
-
-  const loadPenaltySchemes = async () => {
-
-    try {
-
-      const response = await getPenaltySchemes();
-
-      console.log(
-        "Penalty Scheme List:",
-        response
-      );
-
-   
-      setPenaltySchemes(
-        Array.isArray(response)
-          ? response
-          : response?.data || []
-      );
-
-    } catch (error) {
-
-      console.error(
-        "Get penalty schemes error:",
-        error
-      );
-
-      setPenaltySchemes([]);
-
-    }
-
-  };
-
-
- 
-  // LOAD DATA WHEN PAGE OPENS
- 
-
-  useEffect(() => {
-
-    loadPenaltySchemes();
-
-  }, []);
-
-
- 
+  // =========================================
   // SEARCH
- 
+  // =========================================
 
   const filteredData = penaltySchemes.filter((item) =>
-
     item.schemeName
       ?.toLowerCase()
       .includes(search.toLowerCase())
-
   );
 
-
- 
-  // ADD BUTTON
- 
+  // =========================================
+  // ADD
+  // =========================================
 
   const handleAdd = () => {
-
-    // Clear previous edit data
     setEditData(null);
-
-    // Open empty form
     setOpenForm(true);
-
   };
 
-
- 
-  // EDIT BUTTON
- 
+  // =========================================
+  // EDIT
+  // =========================================
 
   const handleEdit = (data) => {
-
-    console.log(
-      "Selected Edit Data:",
-      data
-    );
-
-
     setEditData(data);
-
-  
     setOpenForm(true);
-
   };
 
-
- 
+  // =========================================
   // SAVE
+  // =========================================
 
-  const savePenaltyScheme = async (formData) => {
+  const savePenaltyScheme = (formData) => {
+    // =====================================
+    // EDIT EXISTING RECORD
+    // =====================================
 
-    try {
-
-      
-      // EDIT
-      
-
-      if (editData) {
-
-        console.log(
-          "Updating Penalty Scheme:",
-          editData.id,
-          formData
-        );
-
-        await updatePenaltyScheme(
-          editData.id,
-          formData
-        );
-
-        alert(
-          "Penalty Scheme updated successfully"
-        );
-
-      }
-
-      
-      // ADD
-      
-
-      else {
-
-        console.log(
-          "Creating Penalty Scheme:",
-          formData
-        );
-
-        await createPenaltyScheme(
-          formData
-        );
-
-        alert(
-          "Penalty Scheme created successfully"
-        );
-
-      }
-
-
-      
-      // Reload table from database
-      
-
-      await loadPenaltySchemes();
-
-
-      
-      // Close form
-      
-
-      setOpenForm(false);
-
-      setEditData(null);
-
-
-    } catch (error) {
-
-      console.error(
-        "Save penalty scheme error:",
-        error
+    if (editData) {
+      setPenaltySchemes((previousData) =>
+        previousData.map((item) =>
+          item.id === editData.id
+            ? {
+                ...formData,
+                id: editData.id,
+              }
+            : item
+        )
       );
 
-      alert(
-        "Unable to save penalty scheme"
-      );
-
+      alert("Penalty Scheme updated successfully");
     }
 
-  };
+    // =====================================
+    // ADD NEW RECORD
+    // =====================================
 
+    else {
+      const newPenaltyScheme = {
+        ...formData,
+        id: Date.now(),
+      };
 
- 
-  // DELETE SUCCESS
- 
+      setPenaltySchemes((previousData) => [
+        ...previousData,
+        newPenaltyScheme,
+      ]);
 
-  const handleDeleteSuccess = async () => {
+      alert("Penalty Scheme added successfully");
+    }
 
-    // Reload data from database
-    await loadPenaltySchemes();
-
-  };
-
-
- 
-  // CLOSE FORM
- 
-
-  const handleCloseForm = () => {
+    // Close form
 
     setOpenForm(false);
-
     setEditData(null);
-
   };
 
+  // =========================================
+  // DELETE
+  // =========================================
 
- 
+  const handleDeleteSuccess = (id) => {
+    setPenaltySchemes((previousData) =>
+      previousData.filter((item) => item.id !== id)
+    );
+  };
+
+  // =========================================
+  // CLOSE FORM
+  // =========================================
+
+  const handleCloseForm = () => {
+    setOpenForm(false);
+    setEditData(null);
+  };
+
+  // =========================================
   // JSX
- 
+  // =========================================
 
   return (
-
     <div className="penalty-page">
 
-
-      {/*  HEADER*/}
-         
-       
+      {/* =====================================
+          HEADER
+      ====================================== */}
 
       <div className="penalty-header">
 
         <div>
-
-          <h2>
-            Penalty Scheme List
-          </h2>
+          <h2>Penalty Scheme List</h2>
 
           <p>
             Manage Penalty Schemes
           </p>
-
         </div>
-
 
         <AddButton
           text="Add New"
@@ -272,9 +191,9 @@ const PenaltyScheme = () => {
       </div>
 
 
-      {/*   SEARCH */}
-        
-      
+      {/* =====================================
+          SEARCH
+      ====================================== */}
 
       <div className="common-search">
 
@@ -290,9 +209,9 @@ const PenaltyScheme = () => {
       </div>
 
 
-      {/*  TABLE */}
-         
-      
+      {/* =====================================
+          TABLE
+      ====================================== */}
 
       <PenaltySchemeTable
         data={filteredData}
@@ -301,29 +220,20 @@ const PenaltyScheme = () => {
       />
 
 
-      {/*  FORM*/}
-         
-       
+      {/* =====================================
+          FORM
+      ====================================== */}
 
       {openForm && (
-
         <PenaltySchemeForm
-
           onClose={handleCloseForm}
-
           onSave={savePenaltyScheme}
-
           editData={editData}
-
         />
-
       )}
 
     </div>
-
   );
-
 };
-
 
 export default PenaltyScheme;

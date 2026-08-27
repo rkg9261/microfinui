@@ -1,107 +1,573 @@
-import React,{useState} from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import {
   EditButton,
   DeleteButton,
 } from "../../components/buttons";
+
 import EntriesDropdown from "../../components/common/EntriesDropdown";
 
-const BranchesTable = ({ data }) => {
- const [entries, setEntries] = useState(10);
+import {
+  getBranches,
+} from "../../api/branchApi";
+
+
+const BranchesTable = ({
+  search,
+  refreshTable,
+  onEdit,
+  onDelete,
+}) => {
+
+  
+  // STATES
+  
+
+  const [branches, setBranches] = useState([]);
+   
+
+  const [entries, setEntries] =  useState(10);
+  
+
+  const [loading, setLoading] =  useState(false);
+  
+
+  const [error, setError] =  useState("");
+  
+
+
+  
+  // GET BRANCHES API
+  
+
+  const fetchBranches = async () => {
+
+    try {
+
+      setLoading(true);
+
+      setError("");
+
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "GET /api/Branches"
+      );
+
+
+      const response =
+        await getBranches();
+
+
+      console.log(
+        "GET BRANCHES RESPONSE:",
+        response
+      );
+
+
+    
+
+      if (Array.isArray(response)) {
+
+        setBranches(response);
+
+      }
+
+
+
+
+      else if (
+        Array.isArray(response?.data)
+      ) {
+
+        setBranches(
+          response.data
+        );
+
+      }
+
+
+ 
+
+      else if (
+        Array.isArray(response?.result)
+      ) {
+
+        setBranches(
+          response.result
+        );
+
+      }
+
+
+            // UNKNOWN RESPONSE
+      
+      else {
+
+        console.warn(
+          "Unexpected GET response:",
+          response
+        );
+
+        setBranches([]);
+
+      }
+
+
+      console.log(
+        "================================="
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "GET BRANCHES ERROR:",
+        error
+      );
+
+      if (error.response) {
+
+        console.error(
+          "Status:",
+          error.response.status
+        );
+
+        console.error(
+          "API ERROR:",
+          error.response.data
+        );
+
+      }
+
+
+      setError(
+        "Failed to load branches."
+      );
+
+      setBranches([]);
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+  
+  
+
+  useEffect(() => {
+
+    fetchBranches();
+
+  }, [refreshTable]);
+
+
+  
+  // SEARCH
+  
+
+  const filteredBranches =
+    branches.filter((item) => {
+
+      const searchText =
+        search.toLowerCase();
+
+
+      const branchName =
+        (
+          item.branchName || ""
+        ).toLowerCase();
+
+
+      const branchCode =
+        (
+          item.branchCode ||
+          item.code ||
+          ""
+        ).toLowerCase();
+
+
+      const city =
+        (
+          item.city || ""
+        ).toLowerCase();
+
+
+      const phone =
+        (
+          item.contactNumber ||
+          item.phone ||
+          ""
+        ).toLowerCase();
+
+
+      return (
+
+        branchName.includes(
+          searchText
+        )
+
+        ||
+
+        branchCode.includes(
+          searchText
+        )
+
+        ||
+
+        city.includes(
+          searchText
+        )
+
+        ||
+
+        phone.includes(
+          searchText
+        )
+
+      );
+
+    });
+
+
+  
+  // DATE FORMAT
+  
+
+  const formatDate = (date) => {
+
+    if (!date) {
+      return "-";
+    }
+
+
+    const newDate =
+      new Date(date);
+
+
+    if (
+      Number.isNaN(
+        newDate.getTime()
+      )
+    ) {
+
+      return date;
+
+    }
+
+
+    return newDate.toLocaleDateString(
+      "en-IN"
+    );
+
+  };
+
+
+  
+  // LOADING
+  
+
+  if (loading) {
+
+    return (
+
+      <div className="table-wrapper">
+
+        <div className="table-loading">
+
+          Loading branches...
+
+        </div>
+
+      </div>
+
+    );
+
+  }
+
+
+  
+  // TABLE
+  
 
   return (
+
     <div className="table-wrapper">
-        
-            {/* Entry list dropdown */}
-      <EntriesDropdown value={entries} onChange={setEntries}/>
+
+
+      {/*    ENTRIES */}
+       
+      
+
+      <EntriesDropdown
+
+        value={entries}
+
+        onChange={setEntries}
+
+      />
+
+
+      {/*  ERROR*/}
+         
+       
+
+      {error && (
+
+        <div className="branches-table-error">
+
+          {error}
+
+          <button
+            type="button"
+            onClick={fetchBranches}
+          >
+            Retry
+          </button>
+
+        </div>
+
+      )}
+
+
+      {/*  TABLE */}
+         
+      
 
       <table className="common-table">
+
+
+        {/*  TABLE HEADER  */}
+           
+       
 
         <thead>
 
           <tr>
 
-            <th>Sr. No.</th>
+            <th>
+              Sr. No.
+            </th>
 
-            <th>Branch Name</th>
+            <th>
+              Branch Name
+            </th>
 
-            <th>Code</th>
+            <th>
+              Code
+            </th>
 
-            <th>Phone</th>
+            <th>
+              Phone
+            </th>
 
-            <th>City</th>
+            <th>
+              City
+            </th>
 
-            <th>State</th>
+            <th>
+              State
+            </th>
 
-            <th>Opening Date</th>
+            <th>
+              Opening Date
+            </th>
 
-            <th>Status</th>
+            <th>
+              Status
+            </th>
 
-            <th width="170">Action</th>
+            <th width="170">
+              Action
+            </th>
 
           </tr>
 
         </thead>
 
+
+        {/*  TABLE BODY */}
+           
+        
+
         <tbody>
 
-          {data.length > 0 ? (
 
-            data.map((item, index) => (
+          {filteredBranches.length > 0 ? (
 
-              <tr key={item.id}>
+            filteredBranches
+              .slice(0, entries)
+              .map(
+                (item, index) => (
 
-                <td>{index + 1}</td>
-
-                <td>{item.branchName}</td>
-
-                <td>{item.code}</td>
-
-                <td>{item.phone}</td>
-
-                <td>{item.city}</td>
-
-                <td>{item.state}</td>
-
-                <td>{item.openingDate}</td>
-
-                <td>
-
-                  <span
-                    className={`table-status ${
-                      item.status === "ACTIVE"
-                        ? "active"
-                        : "inactive"
-                    }`}
+                  <tr
+                    key={
+                      item.branchId ||
+                      item.id ||
+                      index
+                    }
                   >
-                    {item.status}
-                  </span>
 
-                </td>
 
-                <td>
+                    {/* SR NO */}
+                       
+                   
 
-                  <div className="table-action">
+                    <td>
 
-                    <EditButton
-                      onClick={() =>
-                        alert("Edit Button Clicked")
-                      }
-                    />
+                      {index + 1}
 
-                    <DeleteButton
-                      onClick={() =>
-                        alert("Delete Button Clicked")
-                      }
-                    />
+                    </td>
 
-                  </div>
 
-                </td>
+                    {/*
+                        BRANCH NAME
+                    */}
 
-              </tr>
+                    <td>
 
-            ))
+                      {item.branchName ||
+                        "-"}
+
+                    </td>
+
+
+                    {/* CODE*/}
+                    
+                       
+
+                    <td>
+
+                      {item.branchCode ||
+                        item.code ||
+                        "-"}
+
+                    </td>
+
+
+                    {/*PHONE  */}
+                        
+                  
+
+                    <td>
+
+                      {item.contactNumber ||
+                        item.phone ||
+                        "-"}
+
+                    </td>
+
+
+                    {/* CITY  */}
+                       
+                  
+
+                    <td>
+
+                      {item.city ||
+                        "-"}
+
+                    </td>
+
+
+                    {/* STATE*/}
+                       
+                    
+
+                    <td>
+
+                      {item.stateName ||
+                        item.state ||
+                        item.stateId ||
+                        "-"}
+
+                    </td>
+
+
+                    {/*  OPENING DATE*/}
+                      
+                    
+
+                    <td>
+
+                      {formatDate(
+                        item.openingDate
+                      )}
+
+                    </td>
+
+
+                    {/* STATUS */}
+                       
+                   
+
+                    <td>
+
+                      <span
+                        className={`table-status ${
+                          item.isActive === true ||
+                          item.status === "ACTIVE"
+                            ? "active"
+                            : "inactive"
+                        }`}
+                      >
+
+                        {item.isActive === true ||
+                        item.status === "ACTIVE"
+                          ? "ACTIVE"
+                          : "INACTIVE"}
+
+                      </span>
+
+                    </td>
+
+
+                    {/* ACTION */}
+                       
+                   
+
+                    <td>
+
+                      <div className="table-action">
+
+
+                        <EditButton
+
+                          onClick={() =>
+                            onEdit(item)
+                          }
+
+                        />
+
+
+                        <DeleteButton
+
+                          onClick={() =>
+                            onDelete(item)
+                          }
+
+                        />
+
+
+                      </div>
+
+                    </td>
+
+
+                  </tr>
+
+                )
+              )
 
           ) : (
 
@@ -111,7 +577,9 @@ const BranchesTable = ({ data }) => {
                 colSpan="9"
                 className="table-empty"
               >
+
                 No Branch Found
+
               </td>
 
             </tr>
@@ -123,7 +591,9 @@ const BranchesTable = ({ data }) => {
       </table>
 
     </div>
+
   );
+
 };
 
 export default BranchesTable;

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+} from "react";
 
 import "./Branches.css";
 import "../../components/common/Table.css";
@@ -11,68 +13,277 @@ import {
   AddButton,
 } from "../../components/buttons";
 
+import {
+  createBranch,
+  updateBranch,
+  deleteBranch,
+} from "../../api/branchApi";
+
+
 const Branches = () => {
 
+  
+  // STATES
+  
+
   const [search, setSearch] = useState("");
+   
 
-  const [openForm, setOpenForm] = useState(false);
+  const [openForm, setOpenForm] =  useState(false);
+  
 
-  const [branches, setBranches] = useState([
-    {
-      id: 1,
-      branchName: "LASKARHAT",
-      code: "EG-2",
-      phone: "9909091425",
-      city: "KUDAL",
-      state: "MAHARASHTRA",
-      openingDate: "02-02-2026",
-      status: "ACTIVE",
-    },
-    {
-      id: 2,
-      branchName: "JAGATPURA",
-      code: "EG-1",
-      phone: "7070779568",
-      city: "DALSINGHSARAI",
-      state: "BIHAR",
-      openingDate: "21-04-2025",
-      status: "ACTIVE",
-    },
-  ]);
+  const [editingBranch, setEditingBranch] =  useState(null);
+  
 
-  const filteredBranches = branches.filter((item) =>
-    item.branchName
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  // This value tells Table to call GET again
+  const [refreshTable, setRefreshTable] = useState(0);
 
-  const saveBranch = (newBranch) => {
+  
+  // REFRESH TABLE
+  
 
-    setBranches((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        ...newBranch,
-      },
-    ]);
+  const refreshBranchTable = () => {
 
-    setOpenForm(false);
+    setRefreshTable(
+      (previous) => previous + 1
+    );
 
   };
+
+
+  
+  // SAVE BRANCH
+  // POST / PUT
+  
+
+const saveBranch = async (formData) => {
+
+  try {
+
+   
+    // UPDATE
+   
+
+    if (editingBranch) {
+
+      const branchId =
+        editingBranch.branchId ||
+        editingBranch.id;
+
+      const updateData = {
+
+        ...formData,
+
+        branchId: Number(branchId),
+
+      };
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "PUT URL:",
+        `/api/Branches/${branchId}`
+      );
+
+      console.log(
+        "PUT REQUEST BODY:",
+        updateData
+      );
+
+      console.log(
+        "================================="
+      );
+
+
+      const response =
+        await updateBranch(
+          branchId,
+          updateData
+        );
+
+
+      console.log(
+        "PUT SUCCESS:",
+        response
+      );
+
+    }
+
+   
+    // CREATE
+   
+
+    else {
+
+      console.log(
+        "POST REQUEST BODY:",
+        formData
+      );
+
+
+      const response =
+        await createBranch(
+          formData
+        );
+
+
+      console.log(
+        "POST SUCCESS:",
+        response
+      );
+
+    }
+
+
+   
+    // REFRESH TABLE
+   
+
+    refreshBranchTable();
+
+    return true;
+
+
+  } catch (error) {
+
+    console.error(
+      "SAVE BRANCH ERROR:",
+      error
+    );
+
+
+    if (error.response) {
+
+      console.error(
+        "Status:",
+        error.response.status
+      );
+
+      console.error(
+        "API Error:",
+        error.response.data
+      );
+
+    }
+
+    throw error;
+
+  }
+
+};
+
+
+  
+  // EDIT
+  
+
+  const handleEdit = (branch) => {
+
+    console.log(
+      "EDIT BRANCH:",
+      branch
+    );
+
+    setEditingBranch(branch);
+
+    setOpenForm(true);
+
+  };
+
+
+  
+  // DELETE
+  
+
+  const handleDelete = async (branch) => {
+
+    const branchId =
+      branch.branchId ||
+      branch.id;
+
+    const confirmDelete =
+      window.confirm(
+        `Are you sure you want to delete "${branch.branchName}"?`
+      );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+
+    try {
+
+      console.log(
+        "DELETE BRANCH ID:",
+        branchId
+      );
+
+      const response =
+        await deleteBranch(
+          branchId
+        );
+
+      console.log(
+        "DELETE SUCCESS:",
+        response
+      );
+
+
+    
+      // GET API WILL RUN AGAIN IN TABLE
+   
+
+      refreshBranchTable();
+
+
+    } catch (error) {
+
+      console.error(
+        "DELETE BRANCH ERROR:",
+        error
+      );
+
+      if (error.response) {
+
+        console.error(
+          "Status:",
+          error.response.status
+        );
+
+        console.error(
+          "API Error:",
+          error.response.data
+        );
+
+      }
+
+    }
+
+  };
+
+
+  
+  // RENDER
+  
 
   return (
 
     <div className="branches-page">
 
-      {/* ===============================
-              HEADER
-      =============================== */}
+
+      {/*  HEADER*/}
+         
+       
 
       <div className="branches-header">
 
         <div>
 
-          <h2>Branch List</h2>
+          <h2>
+            Branch List
+          </h2>
 
           <p>
             Manage All Branches
@@ -80,16 +291,24 @@ const Branches = () => {
 
         </div>
 
+
         <AddButton
           text="Add New"
-          onClick={() => setOpenForm(true)}
+          onClick={() => {
+
+            setEditingBranch(null);
+
+            setOpenForm(true);
+
+          }}
         />
 
       </div>
 
-      {/* ===============================
-              SEARCH
-      =============================== */}
+
+      {/* 
+          SEARCH
+       */}
 
       <div className="common-search">
 
@@ -104,25 +323,43 @@ const Branches = () => {
 
       </div>
 
-      {/* ===============================
-              TABLE
-      =============================== */}
+
+      {/* TABLE*/}
+          
 
       <BranchesTable
-        data={filteredBranches}
+
+        search={search}
+
+        refreshTable={refreshTable}
+
+        onEdit={handleEdit}
+
+        onDelete={handleDelete}
+
       />
 
-      {/* ===============================
-              POPUP
-      =============================== */}
+
+      {/*FORM */}
+          
+       
 
       {openForm && (
 
         <BranchesForm
-          onClose={() =>
-            setOpenForm(false)
-          }
+
+          onClose={() => {
+
+            setOpenForm(false);
+
+            setEditingBranch(null);
+
+          }}
+
           onSave={saveBranch}
+
+          editingBranch={editingBranch}
+
         />
 
       )}

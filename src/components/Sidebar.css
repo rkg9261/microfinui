@@ -725,6 +725,353 @@
   text-decoration: none;
 }
 
+
+
+/* reporting */
+
+/* =========================================================
+   REPORTING SECTION
+========================================================= */
+
+
+/* ===========================
+   REPORTING BLOCK
+=========================== */
+
+.reporting-menu {
+  width: 100%;
+}
+
+.reporting-block {
+  width: 100%;
+}
+
+
+/* ===========================
+   REPORTING MAIN ITEM
+=========================== */
+
+.reporting-item {
+  height: 52px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: .3s;
+
+  padding: 0 18px;
+
+  color: #333;
+
+  user-select: none;
+
+  text-decoration: none;
+}
+
+
+/* ===========================
+   REPORTING HOVER
+=========================== */
+
+.reporting-item:hover {
+  background: #f6f7fb;
+}
+
+
+/* ===========================
+   REPORTING LEFT
+=========================== */
+
+.reporting-item .sidebar-left {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+/* ===========================
+   REPORTING ICON
+=========================== */
+
+.reporting-item .sidebar-left svg {
+  width: 18px;
+  min-width: 18px;
+
+  font-size: 18px;
+}
+
+
+/* ===========================
+   REPORTING TEXT
+=========================== */
+
+.reporting-item .sidebar-left span {
+  white-space: nowrap;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: .25s;
+}
+
+
+/* ===========================
+   REPORTING ARROW
+=========================== */
+
+.reporting-arrow {
+  font-size: 11px;
+
+  transition: .35s;
+}
+
+.reporting-arrow.rotate {
+  transform: rotate(90deg);
+}
+
+
+/* ===========================
+   REPORTING SUBMENU
+=========================== */
+
+.reporting-submenu {
+  max-height: 0;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  transform: translateY(-10px);
+
+  transition:
+    max-height 0.9s ease-in-out,
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+
+/* ===========================
+   REPORTING SUBMENU SHOW
+=========================== */
+
+.reporting-submenu.show {
+  max-height: 600px;
+
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+
+/* ===========================
+   REPORTING SUBMENU ITEM
+=========================== */
+
+.reporting-submenu-item {
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding-left: 55px;
+
+  font-size: 14px;
+
+  color: #555;
+
+  transition: .3s;
+
+  animation: reportingSubmenu .35s ease;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+}
+
+
+/* ===========================
+   REPORTING SUBMENU HOVER
+=========================== */
+
+.reporting-submenu-item:hover {
+  background: #ececec;
+
+  color: #0d7738;
+}
+
+
+/* ===========================
+   REPORTING RADIO / CIRCLE
+=========================== */
+
+.reporting-radio {
+  width: 20px;
+
+  min-width: 20px;
+
+  margin-right: 5px;
+
+  font-size: 17px;
+
+  color: #888;
+
+  line-height: 1;
+
+  transition: .25s;
+}
+
+
+/* ===========================
+   REPORTING ACTIVE ITEM
+=========================== */
+
+.reporting-submenu-item.reporting-submenu-active {
+  background: #f3f8f3;
+
+  color: #0d7738;
+
+  font-weight: 600;
+
+  border-left: 4px solid #1b9448;
+}
+
+
+/* ===========================
+   ACTIVE CIRCLE
+=========================== */
+
+.reporting-submenu-item.reporting-submenu-active
+.reporting-radio {
+  color: #1b9448;
+}
+
+
+/* ===========================
+   REPORTING ANIMATION
+=========================== */
+
+@keyframes reportingSubmenu {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(-12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   REPORTING ICON
+========================================================= */
+
+.reporting-item .accounting-icon-blue {
+  color: #3b9bc3;
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR - REPORTING
+========================================================= */
+
+
+/* Hide reporting text */
+
+.sidebar.close .reporting-item
+.sidebar-left span {
+  opacity: 0;
+
+  width: 0;
+
+  overflow: hidden;
+}
+
+
+/* Center reporting icon */
+
+.sidebar.close .reporting-item {
+  justify-content: center;
+
+  padding: 0;
+}
+
+
+.sidebar.close .reporting-item
+.sidebar-left {
+  width: 100%;
+
+  justify-content: center;
+}
+
+
+/* Hide reporting arrow */
+
+.sidebar.close .reporting-arrow {
+  display: none;
+}
+
+
+/* Hide reporting submenu */
+
+.sidebar.close .reporting-submenu {
+  display: none;
+}
+
+
+/* =========================================================
+   REPORTING ICON SIZE
+========================================================= */
+
+.reporting-item
+.sidebar-left svg {
+  font-size: 18px;
+
+  width: 18px;
+
+  min-width: 18px;
+}
+
+
+/* =========================================================
+   REPORTING LINK
+========================================================= */
+
+.reporting-submenu-item,
+.reporting-submenu-item:visited,
+.reporting-submenu-item:hover,
+.reporting-submenu-item:active {
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   REPORTING MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .reporting-item {
+    height: 50px;
+  }
+
+  .reporting-submenu-item {
+    padding-left: 50px;
+  }
+
+}
+
 /* ===========================
    RESPONSIVE
 =========================== */

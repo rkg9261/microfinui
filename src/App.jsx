@@ -8,7 +8,7 @@ import LoanPlan from "./pages/loanplan/LoanPlan";
 import Branches from "./pages/branches/Branches";
 import BranchCenter from "./pages/branchcenter/BranchCenter";
 import StaffBranches from "./pages/staffbranches/StaffBranches";
-// import PenaltyScheme from "./pages/penaltyscheme/PenaltyScheme";
+import PenaltyScheme from "./pages/penaltyscheme/PenaltyScheme";
 import Group from "./pages/groups/Group";
 import State from "./pages/state/State";
 import Bank from "./pages/bank/Bank";
@@ -59,6 +59,25 @@ import AccFundTransfer from "./pages/AccFundTransfer/AccFundTransfer";
 import AcGroup from "./pages/acgroup/AcGroup";
 import Ledger from "./pages/ledger/Ledger";
 import BranchLedger from "./pages/branchLedger/BranchLedger";
+import ChangePassword from "./pages/changePassword/ChangePassword";
+import { PiFile } from "react-icons/pi";
+import Profile from "./pages/profile/Profile";
+import Settings from "./pages/settings/Settings";
+import DeathMember from "./pages/loanCase/deathmember/DeathMember";
+import TrialBalance from "./pages/accounting/voucher/trialbalance/TrialBalance";
+import FYTrialBalance from "./pages/accounting/voucher/fyTrialBalance/FyTrialBalance";
+import LoanSettlement from "./pages/loanCase/loanSettlement/LoanSettlement";
+import FYVoucherStatement from "./pages/accounting/voucher/FYVoucherStatement/FYVoucherStatement";
+import FYOpeningBalance from "./pages/accounting/voucher/FYOpeningBalance/FYOpeningBalance";
+import LoanReport from "./pages/reporting/loanreport/LoanReport";
+import DueEmiReport from "./pages/reporting/dueemireport/DueEmiReport";
+import CollectionReport from "./pages/reporting/collectionReport/CollectionReport";
+import DisbursementReport from "./pages/reporting/disbursementreport/DisbursementReport";
+import SettlementReport from "./pages/reporting/settlementreport/SettlementReport";
+import MemberAttendance from "./pages/reporting/memberattendance/MemberAttendance";
+import OnlinePaymentReport from "./pages/reporting/onlinepaymentreport/OnlinePaymentReport";
+import CibilReportExperian from "./pages/reporting/cibilreportexperian/CibilReportExperian";
+import CibilReportEquifax from "./pages/reporting/cibilreportequifax/CibilReportEquifax";
 
 
 // import Disbursement from "./pages/disbursement/Disbursement";
@@ -83,7 +102,7 @@ function App() {
       {/* Dashboard Pages */}
          {/* MASTER FOLDER PAGES */}
       <Route path="/loan-plan" element={<Layout><LoanPlan /></Layout>}/>
-      {/* <Route path="/penalty-scheme" element={ <Layout><PenaltyScheme /></Layout>}/> */}
+      <Route path="/penalty-scheme" element={ <Layout><PenaltyScheme /></Layout>}/>
       <Route path="/branches" element={<Layout><Branches /></Layout> }/>
       <Route path="/staff-branch" element={<Layout><StaffBranches /></Layout>}/>
       <Route path="/branch-center"element={<Layout><BranchCenter /></Layout>}/>
@@ -123,72 +142,87 @@ function App() {
         <Route path="/receipt"element={<Layout><Payment/></Layout>}/>
         <Route path="/contra"element={<Layout><Payment/></Layout>}/>
         <Route path="/journal"element={<Layout><Payment/></Layout>}/>
+          <Route path="/trial-balance"element={<Layout><TrialBalance/></Layout>}/>
+        <Route path="/fy-trial-balance"element={<Layout><FYTrialBalance/></Layout>}/>
+        <Route path="/fy-voucher-statement"element={<Layout><FYVoucherStatement/></Layout>}/>
+           <Route path="/fy-opening-balance"element={<Layout><FYOpeningBalance/></Layout>}/>
 
-        {/* Apply for loan pages */}
+                              {/* Apply for loan pages */}
            <Route path="/loan-topup"element={<Layout><LoanTopup/></Layout>}/>
             <Route path="/individual-loan"element={<Layout><IndividualLoan/></Layout>}/>
              <Route path="/group-loan"element={<Layout><GroupLoan/></Layout>}/>
 
-             {/* Loan Summary */}
-       <Route path="/loan-summary"element={<Layout><LoanSummary/></Layout>}/>
+                               {/* Loan Summary */}
+      <Route path="/loan-summary"element={<Layout><LoanSummary/></Layout>}/>
 
-                  {/* Area survey */}
+                               {/* Area survey */}
          <Route path="/area-survey"element={<Layout><AreaSummary/></Layout>}/>
 
-                    {/* logs records */}
+                               {/* logs records */}
         <Route path="/log-records"element={<Layout><LogsRecord/></Layout>}/>
 
                        {/* loan history */}
-            
             <Route path="/loan-history"element={<Layout><LoanHistory/></Layout>}/>
 
-            {/* APPROVALS */}
+                             {/* APPROVALS */}
 
                <Route path="/approval-loan"element={<Layout><LoanApproval/></Layout>}/>
-
       <Route path="/approval-salary"element={<Layout><SalaryApproval/></Layout>}/>
-
    <Route path="/approval-collection"element={<Layout><Collection/></Layout>}/>
-
  <Route path="/approve-product-loan"element={<Layout><ProductLoanApproval/></Layout>}/>
-
   <Route path="/settlement"element={<Layout><ApprovalSettlement/></Layout>}/>
-
-
    <Route path="/fund-transfer"element={<Layout><FundTransfer/></Layout>}/>
   
-       {/* EMI  RECORDS*/}
+                                   {/* EMI  RECORDS*/}
   
    <Route path="/emi-advance-security"element={<Layout><AdvanceSecurity/></Layout>}/>
-  
    <Route path="/paid-emi"element={<Layout><PaidEmi/></Layout>}/>
-
  <Route path="/due-emi"element={<Layout><DueEmi/></Layout>}/>
-
  <Route path="/future-due"element={<Layout><FutureDueEmi/></Layout>}/>
-
  <Route path="/promise-pay"element={<Layout><PromiseToPay/></Layout>}/>
-
   <Route path="/group-emi"element={<Layout><GroupEmiCollection/></Layout>}/>
-
  <Route path="/memeber-collection(old)"element={<Layout><OldMemberCollection/></Layout>}/>
-
  <Route path="/memeber-collection(new)"element={<Layout><NewMemberCollection/></Layout>}/>
-
   <Route path="/penalty-due"element={<Layout><DuePenalty/></Layout>}/>
 
-  {/* Acconting section */}
-        {/* Acc-Fund Transfer */}
- <Route path="/Acc-fund-transfer"element={<Layout><AccFundTransfer/></Layout>}/>
-
+                               {/* Acconting section */}
+                           {/* Acc-Fund Transfer */}
+  <Route path="/Acc-fund-transfer"element={<Layout><AccFundTransfer/></Layout>}/>
                 {/* Ac-Group */}
-<Route path="/acgroup"element={<Layout><AcGroup/></Layout>}/>
-
-              {/* Ledger */}
-<Route path="/ledger"element={<Layout><Ledger/></Layout>}/>
-             
+  <Route path="/acgroup"element={<Layout><AcGroup/></Layout>}/>
+                      {/* Ledger */}
+          <Route path="/ledger"element={<Layout><Ledger/></Layout>}/>
              {/* Branch Ledger */}
-       <Route path="/branch-ledger"element={<Layout><BranchLedger/></Layout>}/>      
+       <Route path="/branch-ledger"element={<Layout><BranchLedger/></Layout>}/> 
+
+                      {/* loan case */}
+
+              <Route path="/death-member-list"element={<Layout><DeathMember/></Layout>}/> 
+              <Route path="/loan-settlement"element={<Layout><LoanSettlement/></Layout>}/> 
+
+      
+
+                {/* Reporting */}
+ <Route path="/loan-report"element={<Layout><LoanReport/></Layout>}/> 
+ <Route path="/due-emi-reporting"element={<Layout><DueEmiReport/></Layout>}/> 
+ <Route path="/collection-reporting"element={<Layout><CollectionReport/></Layout>}/> 
+<Route path="/disbursement-reporting"element={<Layout><DisbursementReport/></Layout>}/> 
+<Route path="/settlement-reporting"element={<Layout><SettlementReport/></Layout>}/> 
+<Route path="/member-attendance"element={<Layout><MemberAttendance/></Layout>}/> 
+<Route path="/online-payment-reporting"element={<Layout><OnlinePaymentReport/></Layout>}/> 
+<Route path="/experian-cibil-report"element={<Layout><CibilReportExperian/></Layout>}/> 
+<Route path="/equifax-cibil-report"element={<Layout><CibilReportEquifax/></Layout>}/> 
+
+                             {/* Admin  */}
+                           {/* change Password */}
+          <Route path="/change-password"element={<Layout><ChangePassword/></Layout>}/> 
+
+                                 {/* pofile */}
+           <Route path="/profile"element={<Layout><Profile/></Layout>}/> 
+
+                              {/* setting */}
+              <Route path="/setting"element={<Layout><Settings/></Layout>}/>              
+                                  {/* Admin end */}
    </Routes>
    
               

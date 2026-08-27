@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import "./Branches.css";
 
-// ================= Validation =================
+import {
+  validateRequired,
+} from "../../utils/validation";
 
-import { validateRequired } from "../../utils/validation";
 import "../../utils/validation.css";
 
 import {
@@ -13,121 +17,338 @@ import {
   CloseButton,
 } from "../../components/buttons";
 
+
 const BranchesForm = ({
   onClose,
   onSave,
+  editingBranch,
 }) => {
 
-  const [formData, setFormData] = useState({
+
+  // INITIAL FORM DATA
+
+
+  const initialFormData = {
 
     branchName: "",
 
-    pincode: "",
-
-    openingDate: "",
-
-    contactEmail: "",
-
-    address: "",
-
-    contactNumber: "",
+    branchCode: "",
 
     city: "",
 
-    landlineNumber: "",
+    pincode: "",
 
-    state: "",
+    address: "",
+
+    // User-visible names
+    stateName: "",
+
+    districtName: "",
+
+    // API values
+    stateId: "",
+
+    districtId: "",
+
+    countryId: 1,
+
+    companyId: 1,
+
+    contactEmail: "",
+
+    contactNumber: "",
+
+    landlineNumber: "",
 
     gstinNumber: "",
 
-    country: "India",
+    openingDate: "",
 
-    status: "ACTIVE",
+    isActive: true,
 
-  });
+    createdBy: 1,
+  };
 
-  // ================= Validation State =================
 
-  const [errors, setErrors] = useState({});
 
-  // ================= Handle Change =================
+  // FORM DATA
+
+
+  const [
+    formData,
+    setFormData,
+  ] = useState(initialFormData);
+
+
+
+  // ERRORS
+
+
+  const [
+    errors,
+    setErrors,
+  ] = useState({});
+
+
+
+  // SAVING
+
+
+  const [
+    saving,
+    setSaving,
+  ] = useState(false);
+
+
+
+  // LOAD EDIT DATA
+
+
+  useEffect(() => {
+
+    if (!editingBranch) {
+
+      setFormData({
+        ...initialFormData,
+      });
+
+      setErrors({});
+
+      return;
+    }
+
+
+    
+    // EDIT MODE
+    
+
+    setFormData({
+
+      branchName:
+        editingBranch.branchName ||
+        "",
+
+      branchCode:
+        editingBranch.branchCode ||
+        "",
+
+      city:
+        editingBranch.city ||
+        "",
+
+      pincode:
+        editingBranch.pincode ||
+        "",
+
+      address:
+        editingBranch.address ||
+        "",
+
+
+     
+      // STATE NAME
+     
+
+      stateName:
+        editingBranch.stateName ||
+        editingBranch.state?.stateName ||
+        "",
+
+
+     
+      // DISTRICT NAME
+     
+
+      districtName:
+        editingBranch.districtName ||
+        editingBranch.district?.districtName ||
+        "",
+
+
+     
+      // API IDS
+     
+
+      stateId:
+        editingBranch.stateId ??
+        "",
+
+      districtId:
+        editingBranch.districtId ??
+        "",
+
+
+      countryId:
+        editingBranch.countryId ??
+        1,
+
+      companyId:
+        editingBranch.companyId ??
+        1,
+
+
+      contactEmail:
+        editingBranch.contactEmail ||
+        "",
+
+      contactNumber:
+        editingBranch.contactNumber ||
+        "",
+
+      landlineNumber:
+        editingBranch.landlineNumber ||
+        "",
+
+      gstinNumber:
+        editingBranch.gstinNumber ||
+        "",
+
+      openingDate:
+        editingBranch.openingDate
+          ? editingBranch.openingDate.substring(
+              0,
+              10
+            )
+          : "",
+
+      isActive:
+        editingBranch.isActive !== false,
+
+      createdBy:
+        editingBranch.createdBy ??
+        1,
+
+    });
+
+    setErrors({});
+
+  }, [editingBranch]);
+
+
+
+  // HANDLE CHANGE
+
 
   const handleChange = (e) => {
 
-    const { name, value } = e.target;
+    const {
+      name,
+      value,
+    } = e.target;
 
-    setFormData((prev) => ({
 
-      ...prev,
+    setFormData(
+      (previous) => ({
 
-      [name]: value,
+        ...previous,
 
-    }));
+        [name]: value,
 
-    // Remove error while typing
+      })
+    );
 
-    setErrors((prev) => ({
 
-      ...prev,
+    setErrors(
+      (previous) => ({
 
-      [name]: "",
+        ...previous,
 
-    }));
+        [name]: "",
+
+      })
+    );
 
   };
 
-  // ================= Handle Submit =================
 
-  const handleSubmit = (e) => {
+
+  // RESET FORM
+
+
+  const resetForm = () => {
+
+    setFormData({
+      ...initialFormData,
+    });
+
+    setErrors({});
+
+  };
+
+
+
+  // SUBMIT
+
+
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    const validation = validateRequired(
 
-      formData,
+    
+    // VALIDATION
+    
 
-      [
+    const validation =
+      validateRequired(
 
-        {
-          name: "branchName",
-          label: "Branch Name",
-        },
+        formData,
 
-        {
-          name: "pincode",
-          label: "Pincode",
-        },
+        [
 
-        {
-          name: "openingDate",
-          label: "Opening Date",
-        },
+          {
+            name: "branchName",
+            label: "Branch Name",
+          },
 
-        {
-          name: "contactEmail",
-          label: "Contact Email",
-        },
+          {
+            name: "branchCode",
+            label: "Branch Code",
+          },
 
-        {
-          name: "contactNumber",
-          label: "Contact Number",
-        },
+          {
+            name: "city",
+            label: "City",
+          },
 
-        {
-          name: "city",
-          label: "City",
-        },
+          {
+            name: "pincode",
+            label: "Pincode",
+          },
 
-        {
-          name: "state",
-          label: "State",
-        },
+          {
+            name: "stateName",
+            label: "State",
+          },
 
-      ]
+          {
+            name: "districtName",
+            label: "District",
+          },
 
-    );
+          {
+            name: "openingDate",
+            label: "Opening Date",
+          },
 
-    if (Object.keys(validation).length > 0) {
+          {
+            name: "contactEmail",
+            label: "Contact Email",
+          },
+
+          {
+            name: "contactNumber",
+            label: "Contact Number",
+          },
+
+        ]
+
+      );
+
+
+    if (
+      Object.keys(validation).length > 0
+    ) {
 
       setErrors(validation);
 
@@ -135,21 +356,190 @@ const BranchesForm = ({
 
     }
 
+
+    
+    // CHECK STATE ID
+    
+
+    if (
+      !formData.stateId
+    ) {
+
+      setErrors({
+
+        stateName:
+          "State ID could not be found for this state.",
+
+      });
+
+      return;
+
+    }
+
+
+    
+    // CHECK DISTRICT ID
+    
+
+    if (
+      !formData.districtId
+    ) {
+
+      setErrors({
+
+        districtName:
+          "District ID could not be found for this district.",
+
+      });
+
+      return;
+
+    }
+
+
+    
+    // CLEAR ERRORS
+    
+
     setErrors({});
 
-    onSave({
 
-      ...formData,
+    
+    // EXISTING API BODY
+    
 
-      code: "BR-" + Date.now(),
+    const branchData = {
 
-      phone: formData.contactNumber,
+      branchName:
+        formData.branchName.trim(),
 
-      openingDate: formData.openingDate,
+      branchCode:
+        formData.branchCode.trim(),
 
-    });
+      city:
+        formData.city.trim(),
+
+      pincode:
+        formData.pincode.trim(),
+
+      address:
+        formData.address.trim(),
+
+
+     
+      // Existing API still receives IDs
+
+      stateId:
+        Number(formData.stateId),
+
+      countryId:
+        Number(formData.countryId),
+
+      companyId:
+        formData.companyId
+          ? Number(formData.companyId)
+          : null,
+
+      districtId:
+        Number(formData.districtId),
+
+
+      contactEmail:
+        formData.contactEmail.trim(),
+
+      contactNumber:
+        formData.contactNumber.trim(),
+
+      landlineNumber:
+        formData.landlineNumber.trim(),
+
+      gstinNumber:
+        formData.gstinNumber.trim(),
+
+      openingDate:
+        formData.openingDate
+          ? `${formData.openingDate}T00:00:00`
+          : null,
+
+      isActive:
+        formData.isActive,
+
+      createdBy:
+        Number(formData.createdBy),
+
+    };
+
+
+    
+    // CONSOLE
+    
+
+    console.log(
+      "===================================="
+    );
+
+    console.log(
+      editingBranch
+        ? "UPDATE BRANCH BODY:"
+        : "CREATE BRANCH BODY:"
+    );
+
+    console.log(branchData);
+
+    console.log(
+      "===================================="
+    );
+
+
+    
+    // SAVE
+    
+
+    try {
+
+      setSaving(true);
+
+
+      await onSave(
+        branchData
+      );
+
+
+      resetForm();
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "BRANCH FORM SUBMIT ERROR:",
+        error
+      );
+
+    }
+
+    finally {
+
+      setSaving(false);
+
+    }
 
   };
+
+
+
+  // TITLE
+
+
+  const title =
+    editingBranch
+      ? "Edit Branch"
+      : "Add New Branch";
+
+
+
+  // JSX
+
 
   return (
 
@@ -157,26 +547,38 @@ const BranchesForm = ({
 
       <div className="branches-modal-content">
 
-        {/* ===========================
-                HEADER
-        =========================== */}
+
+        {/*  HEADER */}
+          
+       
 
         <div className="branches-modal-header">
 
-          <h2>Add New Branch</h2>
+          <h2>
+            {title}
+          </h2>
 
           <CloseButton
             onClick={onClose}
+            disabled={saving}
           />
 
         </div>
+
+
+        {/* FORM*/}
+           
+        
 
         <form
           className="branches-form"
           onSubmit={handleSubmit}
         >
 
-          {/* ================= Branch Name ================= */}
+
+          {/* BRANCH NAME*/}
+             
+          
 
           <div className="branches-form-group">
 
@@ -189,131 +591,64 @@ const BranchesForm = ({
               name="branchName"
               value={formData.branchName}
               onChange={handleChange}
-              className={errors.branchName ? "error-input" : ""}
+              disabled={saving}
+              placeholder="Enter branch name"
+              className={
+                errors.branchName
+                  ? "error-input"
+                  : ""
+              }
             />
 
             {errors.branchName && (
+
               <p className="error-text">
                 {errors.branchName}
               </p>
+
             )}
 
           </div>
 
-          {/* ================= Pincode ================= */}
+
+          {/* BRANCH CODE*/}
+             
+          
 
           <div className="branches-form-group">
 
             <label>
-              Pincode *
+              Branch Code *
             </label>
 
             <input
               type="text"
-              name="pincode"
-              value={formData.pincode}
+              name="branchCode"
+              value={formData.branchCode}
               onChange={handleChange}
-              className={errors.pincode ? "error-input" : ""}
+              disabled={saving}
+              placeholder="Enter branch code"
+              className={
+                errors.branchCode
+                  ? "error-input"
+                  : ""
+              }
             />
 
-            {errors.pincode && (
+            {errors.branchCode && (
+
               <p className="error-text">
-                {errors.pincode}
+                {errors.branchCode}
               </p>
+
             )}
 
           </div>
 
-          {/* ================= Opening Date ================= */}
 
-          <div className="branches-form-group">
-
-            <label>
-              Opening Date *
-            </label>
-
-            <input
-              type="date"
-              name="openingDate"
-              value={formData.openingDate}
-              onChange={handleChange}
-              className={errors.openingDate ? "error-input" : ""}
-            />
-
-            {errors.openingDate && (
-              <p className="error-text">
-                {errors.openingDate}
-              </p>
-            )}
-
-          </div>
-
-          {/* ================= Contact Email ================= */}
-
-          <div className="branches-form-group">
-
-            <label>
-              Contact Email *
-            </label>
-
-            <input
-              type="email"
-              name="contactEmail"
-              value={formData.contactEmail}
-              onChange={handleChange}
-              className={errors.contactEmail ? "error-input" : ""}
-            />
-
-            {errors.contactEmail && (
-              <p className="error-text">
-                {errors.contactEmail}
-              </p>
-            )}
-
-          </div>
-
-          {/* ================= Address ================= */}
-
-          <div className="branches-form-group">
-
-            <label>
-              Address
-            </label>
-
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-            />
-
-          </div>
-
-          {/* ================= Contact Number ================= */}
-
-          <div className="branches-form-group">
-
-            <label>
-              Contact Number *
-            </label>
-
-            <input
-              type="text"
-              name="contactNumber"
-              value={formData.contactNumber}
-              onChange={handleChange}
-              className={errors.contactNumber ? "error-input" : ""}
-            />
-
-            {errors.contactNumber && (
-              <p className="error-text">
-                {errors.contactNumber}
-              </p>
-            )}
-
-          </div>
-
-          {/* ================= City ================= */}
+          {/* CITY*/}
+             
+          
 
           <div className="branches-form-group">
 
@@ -326,18 +661,194 @@ const BranchesForm = ({
               name="city"
               value={formData.city}
               onChange={handleChange}
-              className={errors.city ? "error-input" : ""}
+              disabled={saving}
+              placeholder="Enter city"
+              className={
+                errors.city
+                  ? "error-input"
+                  : ""
+              }
             />
 
             {errors.city && (
+
               <p className="error-text">
                 {errors.city}
               </p>
+
             )}
 
           </div>
 
-          {/* ================= Landline Number ================= */}
+
+          {/* PINCODE*/}
+             
+          
+
+          <div className="branches-form-group">
+
+            <label>
+              Pincode *
+            </label>
+
+            <input
+              type="text"
+              name="pincode"
+              value={formData.pincode}
+              onChange={handleChange}
+              disabled={saving}
+              maxLength={10}
+              inputMode="numeric"
+              placeholder="Enter pincode"
+              className={
+                errors.pincode
+                  ? "error-input"
+                  : ""
+              }
+            />
+
+            {errors.pincode && (
+
+              <p className="error-text">
+                {errors.pincode}
+              </p>
+
+            )}
+
+          </div>
+
+
+          {/*OPENING DATE  */}
+              
+        
+
+          <div className="branches-form-group">
+
+            <label>
+              Opening Date *
+            </label>
+
+            <input
+              type="date"
+              name="openingDate"
+              value={formData.openingDate}
+              onChange={handleChange}
+              disabled={saving}
+              className={
+                errors.openingDate
+                  ? "error-input"
+                  : ""
+              }
+            />
+
+            {errors.openingDate && (
+
+              <p className="error-text">
+                {errors.openingDate}
+              </p>
+
+            )}
+
+          </div>
+
+
+          {/*EMAIL*/}
+              
+          
+
+          <div className="branches-form-group">
+
+            <label>
+              Contact Email *
+            </label>
+
+            <input
+              type="email"
+              name="contactEmail"
+              value={formData.contactEmail}
+              onChange={handleChange}
+              disabled={saving}
+              placeholder="Enter email"
+              className={
+                errors.contactEmail
+                  ? "error-input"
+                  : ""
+              }
+            />
+
+            {errors.contactEmail && (
+
+              <p className="error-text">
+                {errors.contactEmail}
+              </p>
+
+            )}
+
+          </div>
+
+
+          {/* ADDRESS*/}
+             
+          
+
+          <div className="branches-form-group">
+
+            <label>
+              Address
+            </label>
+
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              disabled={saving}
+              placeholder="Enter address"
+            />
+
+          </div>
+
+
+          {/* CONTACT NUMBER*/}
+             
+          
+
+          <div className="branches-form-group">
+
+            <label>
+              Contact Number *
+            </label>
+
+            <input
+              type="text"
+              name="contactNumber"
+              value={formData.contactNumber}
+              onChange={handleChange}
+              disabled={saving}
+              maxLength={20}
+              inputMode="numeric"
+              placeholder="Enter contact number"
+              className={
+                errors.contactNumber
+                  ? "error-input"
+                  : ""
+              }
+            />
+
+            {errors.contactNumber && (
+
+              <p className="error-text">
+                {errors.contactNumber}
+              </p>
+
+            )}
+
+          </div>
+
+
+          {/* LANDLINE*/}
+             
+          
 
           <div className="branches-form-group">
 
@@ -350,88 +861,86 @@ const BranchesForm = ({
               name="landlineNumber"
               value={formData.landlineNumber}
               onChange={handleChange}
+              disabled={saving}
+              placeholder="Enter landline number"
             />
 
           </div>
 
-          {/* ================= State ================= */}
+
+          {/*STATE NAME - INPUT*/}
+              
+          
 
           <div className="branches-form-group">
 
             <label>
-              Select State *
+              State *
             </label>
 
-            <select
-              name="state"
-              value={formData.state}
+            <input
+              type="text"
+              name="stateName"
+              value={formData.stateName}
               onChange={handleChange}
-              className={errors.state ? "error-input" : ""}
-            >
+              disabled={saving}
+              placeholder="Enter state name"
+              className={
+                errors.stateName
+                  ? "error-input"
+                  : ""
+              }
+            />
 
-              <option value="">
-                Select State
-              </option>
+            {errors.stateName && (
 
-              <option value="ANDHRA PRADESH">
-                Andhra Pradesh
-              </option>
-
-              <option value="ASSAM">
-                Assam
-              </option>
-
-              <option value="BIHAR">
-                Bihar
-              </option>
-
-              <option value="DELHI">
-                Delhi
-              </option>
-
-              <option value="GUJARAT">
-                Gujarat
-              </option>
-
-              <option value="KARNATAKA">
-                Karnataka
-              </option>
-
-              <option value="MAHARASHTRA">
-                Maharashtra
-              </option>
-
-              <option value="MADHYA PRADESH">
-                Madhya Pradesh
-              </option>
-
-              <option value="RAJASTHAN">
-                Rajasthan
-              </option>
-
-              <option value="TAMIL NADU">
-                Tamil Nadu
-              </option>
-
-              <option value="UTTAR PRADESH">
-                Uttar Pradesh
-              </option>
-
-              <option value="WEST BENGAL">
-                West Bengal
-              </option>
-
-            </select>
-
-            {errors.state && (
               <p className="error-text">
-                {errors.state}
+                {errors.stateName}
               </p>
+
             )}
 
           </div>
 
-          {/* ================= GSTIN ================= */}
+
+          {/*DISTRICT NAME - INPUT*/}
+              
+          
+
+          <div className="branches-form-group">
+
+            <label>
+              District *
+            </label>
+
+            <input
+              type="text"
+              name="districtName"
+              value={formData.districtName}
+              onChange={handleChange}
+              disabled={saving}
+              placeholder="Enter district name"
+              className={
+                errors.districtName
+                  ? "error-input"
+                  : ""
+              }
+            />
+
+            {errors.districtName && (
+
+              <p className="error-text">
+                {errors.districtName}
+              </p>
+
+            )}
+
+          </div>
+
+
+          {/* GSTIN */}
+             
+         
 
           <div className="branches-form-group">
 
@@ -444,34 +953,59 @@ const BranchesForm = ({
               name="gstinNumber"
               value={formData.gstinNumber}
               onChange={handleChange}
+              disabled={saving}
+              placeholder="Enter GSTIN number"
             />
 
           </div>
 
-          {/* ================= Country ================= */}
+
+          {/*COUNTRY */}
+              
+         
 
           <div className="branches-form-group">
 
             <label>
-              Country *
+              Country
             </label>
 
             <input
               type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              readOnly
+              value="India"
+              disabled
             />
 
           </div>
 
-          {/* ================= Status ================= */}
+
+          {/*COMPANY*/}
+              
+          
 
           <div className="branches-form-group">
 
             <label>
-              Status *
+              Company
+            </label>
+
+            <input
+              type="text"
+              value="Company ID: 1"
+              disabled
+            />
+
+          </div>
+
+
+          {/*STATUS */}
+
+              
+         
+          <div className="branches-form-group">
+
+            <label>
+              Status
             </label>
 
             <div className="radio-group">
@@ -480,24 +1014,53 @@ const BranchesForm = ({
 
                 <input
                   type="radio"
-                  name="status"
-                  value="ACTIVE"
-                  checked={formData.status === "ACTIVE"}
-                  onChange={handleChange}
+                  name="isActive"
+                  checked={
+                    formData.isActive === true
+                  }
+                  onChange={() => {
+
+                    setFormData(
+                      previous => ({
+
+                        ...previous,
+
+                        isActive: true,
+
+                      })
+                    );
+
+                  }}
+                  disabled={saving}
                 />
 
                 Active
 
               </label>
 
+
               <label>
 
                 <input
                   type="radio"
-                  name="status"
-                  value="INACTIVE"
-                  checked={formData.status === "INACTIVE"}
-                  onChange={handleChange}
+                  name="isActive"
+                  checked={
+                    formData.isActive === false
+                  }
+                  onChange={() => {
+
+                    setFormData(
+                      previous => ({
+
+                        ...previous,
+
+                        isActive: false,
+
+                      })
+                    );
+
+                  }}
+                  disabled={saving}
                 />
 
                 Inactive
@@ -508,19 +1071,33 @@ const BranchesForm = ({
 
           </div>
 
-          {/* ================= Buttons ================= */}
+
+          {/*BUTTONS */}
+              
+         
 
           <div className="branches-form-buttons">
 
             <SaveButton
-              text="Save Branch"
+              text={
+                saving
+                  ? editingBranch
+                    ? "Updating..."
+                    : "Saving..."
+                  : editingBranch
+                    ? "Update Branch"
+                    : "Save Branch"
+              }
               type="submit"
+              disabled={saving}
             />
+
 
             <CancelButton
               text="Cancel"
               type="button"
               onClick={onClose}
+              disabled={saving}
             />
 
           </div>
@@ -534,5 +1111,6 @@ const BranchesForm = ({
   );
 
 };
+
 
 export default BranchesForm;

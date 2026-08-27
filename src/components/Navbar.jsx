@@ -1,65 +1,191 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
+import { NavLink } from "react-router-dom";
 
 import {
   FaBars,
   FaBook,
   FaWallet,
   FaChartLine,
-  FaUserCircle,
   FaPowerOff,
   FaShieldAlt,
 } from "react-icons/fa";
 
+import AdminProfile from "./AdminProfile/Adminprofile";
+
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
+
+  // ==========================================
+  // SESSION STATE
+  // ==========================================
+
+  const [selectedSession, setSelectedSession] =
+    useState("2026-2027");
+
+
+  // ==========================================
+  // SESSION OPTIONS
+  // ==========================================
+
+  const sessionOptions = [
+    "2026-2027",
+    "2025-2026",
+    "2024-2025",
+    "2023-2024",
+    "2022-2023",
+  ];
+
+
+
+
   return (
+
     <header
-      className={`top-navbar ${sidebarOpen ? "sidebar-open" : "sidebar-close"}`}
+      className={`top-navbar ${
+        sidebarOpen
+          ? "sidebar-open"
+          : "sidebar-close"
+      }`}
     >
-      {/* Left */}
+
+      {/* =====================================
+          LEFT
+      ===================================== */}
 
       <div className="navbar-left">
+
         <button
           className="menu-btn"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={() =>
+            setSidebarOpen(!sidebarOpen)
+          }
         >
+
           <FaBars />
+
         </button>
+
       </div>
 
-      {/* Right */}
+
+      {/* =====================================
+          RIGHT
+      ===================================== */}
 
       <div className="navbar-right">
-        <div className="nav-box">
+
+
+        {/* =====================================
+            SESSION DROPDOWN
+        ===================================== */}
+
+        <div className="nav-box session-box">
+
           <FaShieldAlt />
-          <span>SESSION : 2026-2027</span>
+
+          <span>
+            SESSION :
+          </span>
+
+          <select
+            value={selectedSession}
+            onChange={(e) =>
+              setSelectedSession(e.target.value)
+            }
+            className="session-select"
+          >
+
+            {sessionOptions.map(
+              (session) => (
+
+                <option
+                  key={session}
+                  value={session}
+                >
+                  {session}
+                </option>
+
+              )
+            )}
+
+          </select>
+
         </div>
 
-        <div className="nav-box">
+
+        {/* =====================================
+            DAY BOOK
+        ===================================== */}
+
+        <NavLink
+          to="/day-book"
+          className="nav-box"
+        >
+
           <FaBook />
-          <span>DAY BOOK</span>
-        </div>
 
-        <div className="nav-box">
+          <span>
+            DAY BOOK
+          </span>
+
+        </NavLink>
+
+
+        {/* =====================================
+            CASH BOOK
+        ===================================== */}
+
+        <NavLink
+          to="/cash-book"
+          className="nav-box"
+        >
+
           <FaWallet />
-          <span>CASH BOOK</span>
-        </div>
 
-        <div className="nav-box">
+          <span>
+            CASH BOOK
+          </span>
+
+        </NavLink>
+
+
+        {/* =====================================
+            VOUCHER ENTRIES
+        ===================================== */}
+
+        <NavLink
+          to="/voucher-entries"
+          className="nav-box"
+        >
+
           <FaChartLine />
-          <span>VOUCHER ENTRIES</span>
-        </div>
 
-        <div className="admin-box">
-          <FaUserCircle />
+          <span>
+            VOUCHER ENTRIES
+          </span>
 
-          <span>ADMIN</span>
-        </div>
+        </NavLink>
+
+
+        {/* =====================================
+            ADMIN PROFILE
+        ===================================== */}
+
+        <AdminProfile />
+
+
+        {/* =====================================
+            LOGOUT
+        ===================================== */}
 
         <button className="logout-btn">
+
           <FaPowerOff />
+
         </button>
+
       </div>
+
     </header>
   );
 };

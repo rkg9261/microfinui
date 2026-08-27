@@ -1,74 +1,567 @@
-.table-wrapper{
-    background:#fff;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 5px 18px rgba(0,0,0,.08);
+/* =========================================================
+   COMMON TABLE
+   MicroFinance Project
+========================================================= */
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.common-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e5e8;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  scrollbar-width: thin;
 }
 
-.common-table{
-    width:100%;
-    border-collapse:collapse;
+
+/* =========================================================
+   HORIZONTAL SCROLLBAR
+========================================================= */
+
+.common-table-wrapper::-webkit-scrollbar {
+  height: 7px;
 }
 
-.common-table thead{
-    background:#2563eb;
-    color:#fff;
+.common-table-wrapper::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border-radius: 10px;
 }
 
-.common-table th{
-    padding:16px;
-    text-align:left;
-    font-size:15px;
-    font-weight:600;
+.common-table-wrapper::-webkit-scrollbar-thumb {
+  background: #777777;
+  border-radius: 10px;
 }
 
-.common-table td{
-    padding:15px;
-    border-bottom:1px solid #edf2f7;
-    font-size:14px;
+.common-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555555;
 }
 
-.common-table tbody tr:hover{
-    background:#f8fbff;
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.common-table {
+  width: 100%;
+  min-width: 1000px;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  background: #ffffff;
+
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.table-empty{
-    text-align:center;
-    padding:40px;
-    color:#64748b;
+
+/* =========================================================
+   TABLE HEADER
+   SCREENSHOT COLOR
+========================================================= */
+
+.common-table thead {
+  background: #0f8fb3;
 }
 
-.table-action{
-    display:flex;
-    align-items:center;
-    gap:10px;
+.common-table thead tr {
+  background: #0f8fb3;
 }
 
-.table-status{
-    padding:6px 15px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:600;
+.common-table thead th {
+  height: 52px;
+
+  padding: 12px 14px;
+
+  background: #0f8fb3;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-align: left;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  vertical-align: middle;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-bottom: 2px solid #0b7d9d;
 }
 
-.table-status.active{
-    background:#dcfce7;
-    color:#15803d;
+
+/* =========================================================
+   FIRST HEADER
+========================================================= */
+
+.common-table thead th:first-child {
+  border-top-left-radius: 7px;
 }
 
-.table-status.inactive{
-    background:#fee2e2;
-    color:#dc2626;
+
+/* =========================================================
+   LAST HEADER
+========================================================= */
+
+.common-table thead th:last-child {
+  border-top-right-radius: 7px;
+
+  border-right: none;
 }
 
-@media(max-width:768px){
 
-.table-wrapper{
-overflow-x:auto;
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.common-table tbody td {
+  height: 50px;
+
+  padding: 12px 14px;
+
+  background: #ffffff;
+
+  color: #555555;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  border-bottom: 1px solid #eeeeee;
+
+  white-space: nowrap;
+
+  vertical-align: middle;
 }
 
-.common-table{
-min-width:900px;
+
+/* =========================================================
+   ALTERNATE ROW
+========================================================= */
+
+.common-table tbody tr:nth-child(even) td {
+  background: #fafcfd;
 }
 
+
+/* =========================================================
+   ROW HOVER
+========================================================= */
+
+.common-table tbody tr:hover td {
+  background: #eef9fc;
+
+  transition: 0.2s ease;
+}
+
+
+/* =========================================================
+   LAST ROW
+========================================================= */
+
+.common-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   SERIAL NUMBER
+========================================================= */
+
+.common-table th:first-child,
+.common-table td:first-child {
+  text-align: center;
+
+  min-width: 70px;
+}
+
+
+/* =========================================================
+   ACTION COLUMN
+========================================================= */
+
+.common-table .action-column {
+  min-width: 170px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   ACTION CELL
+========================================================= */
+
+.common-table .action-cell {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.common-table .status {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 80px;
+
+  padding: 5px 10px;
+
+  border-radius: 15px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+
+/* APPROVED */
+
+.common-table .status-approved {
+  background: #e8f7ed;
+
+  color: #168345;
+}
+
+
+/* PENDING */
+
+.common-table .status-pending {
+  background: #fff5dc;
+
+  color: #a87500;
+}
+
+
+/* DUE */
+
+.common-table .status-due {
+  background: #fff0df;
+
+  color: #d56b00;
+}
+
+
+/* OVERDUE */
+
+.common-table .status-overdue {
+  background: #ffe8e8;
+
+  color: #d33232;
+}
+
+
+/* DISBURSED */
+
+.common-table .status-disbursed {
+  background: #e6f4fa;
+
+  color: #0f8fb3;
+}
+
+
+/* =========================================================
+   TABLE TOP HEADER
+========================================================= */
+
+.common-table-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 55px;
+
+  padding: 10px 16px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* =========================================================
+   TABLE TITLE
+========================================================= */
+
+.common-table-title {
+  margin: 0;
+
+  color: #333333;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   BLUE SECTION HEADING
+   Use this if you want the complete title bar blue
+========================================================= */
+
+.common-table-section {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 52px;
+
+  padding: 0 18px;
+
+  background: #0f8fb3;
+
+  color: #ffffff;
+
+  border-radius: 8px 8px 0 0;
+}
+
+
+.common-table-section h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.common-table-search {
+  width: 230px;
+
+  height: 38px;
+
+  padding: 0 12px;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  border: 1px solid #d9dfe3;
+
+  border-radius: 6px;
+
+  outline: none;
+
+  font-size: 13px;
+}
+
+
+.common-table-search:focus {
+  border-color: #0f8fb3;
+
+  box-shadow: 0 0 0 2px rgba(15, 143, 179, 0.12);
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.common-download-btn {
+  height: 36px;
+
+  padding: 0 14px;
+
+  border: none;
+
+  border-radius: 5px;
+
+  background: #0f8fb3;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+
+.common-download-btn:hover {
+  background: #0b7897;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY TABLE
+========================================================= */
+
+.common-table-empty {
+  padding: 35px 20px;
+
+  color: #888888;
+
+  text-align: center;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+========================================================= */
+
+.common-table-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 50px;
+
+  padding: 10px 15px;
+
+  background: #ffffff;
+
+  color: #777777;
+
+  font-size: 12px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.common-pagination {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+
+.common-pagination button {
+  min-width: 32px;
+
+  height: 32px;
+
+  padding: 0 8px;
+
+  background: #ffffff;
+
+  color: #555555;
+
+  border: 1px solid #dce2e5;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  transition: 0.2s ease;
+}
+
+
+.common-pagination button:hover {
+  background: #eef9fc;
+
+  color: #0f8fb3;
+
+  border-color: #0f8fb3;
+}
+
+
+.common-pagination button.active {
+  background: #0f8fb3;
+
+  color: #ffffff;
+
+  border-color: #0f8fb3;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .common-table {
+    min-width: 900px;
+  }
+
+  .common-table thead th {
+    height: 48px;
+
+    padding: 10px;
+
+    font-size: 11px;
+  }
+
+  .common-table tbody td {
+    padding: 10px;
+
+    font-size: 12px;
+  }
+
+  .common-table-section {
+    padding: 0 14px;
+  }
+
+  .common-table-section h3 {
+    font-size: 15px;
+  }
+
+  .common-table-search {
+    width: 170px;
+  }
+
+  .common-table-footer {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
 }
